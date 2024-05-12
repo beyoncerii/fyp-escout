@@ -40,16 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-    ],
 
-    'api' => [
-        'driver' => 'token',
-        'provider' => 'users',
-    ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
 
-    'athlete' => [
-        'driver' => 'session',
-        'provider' => 'athletes',
+        'athlete' => [
+            'driver' => 'session',
+            'provider' => 'athletes',
+        ],
     ],
 
 

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Athlete;
+//use App\Models\Athlete;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

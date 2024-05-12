@@ -20,9 +20,11 @@ return new class extends Migration
             $table->double('height')->nullable();
             $table->double('weight')->nullable();
             $table->string('position')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.

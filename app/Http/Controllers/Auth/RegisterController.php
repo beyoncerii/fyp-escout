@@ -28,7 +28,7 @@ class RegisterController extends Controller
 
         Athlete::create($data);
 
-        return redirect('/homeathlete');
+        return redirect('/login');
 
     }
 }

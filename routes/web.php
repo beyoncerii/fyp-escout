@@ -31,7 +31,7 @@ Route::get('/home', function(){
 
 Route::get('/homeathlete', function(){
     return view('homeathlete');
-});
+})->name('homeathlete');
 
 Route::get('/homeadmin', function(){
     return view('homeadmin');
