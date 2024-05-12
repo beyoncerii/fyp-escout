@@ -42,6 +42,18 @@ return [
         ],
     ],
 
+    'api' => [
+        'driver' => 'token',
+        'provider' => 'users',
+    ],
+
+    'athlete' => [
+        'driver' => 'session',
+        'provider' => 'athletes',
+    ],
+
+
+
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -63,6 +75,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'athletes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Athlete::class,
         ],
 
         // 'users' => [

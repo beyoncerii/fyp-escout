@@ -6,12 +6,14 @@ use App\Models\Athlete;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\Athlete as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Athlete extends Authenticatable
 
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $guard = 'athlete';
 
     protected $fillable = [
         'name',

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -19,7 +20,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if(!auth()->attempt($request->only('email', 'password'))){
+        if(!Auth::guard('athlete')->attempt($request->only('email', 'password'))){
             return back()->with('error', 'Invalid username or password');
         }
 
