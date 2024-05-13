@@ -73,3 +73,15 @@ Route::post('/editprofile/{id}', [ProfileController::class, 'updateprofile'])
  ->middleware('auth:athlete');
 
 //--------------------------------------------------------------------
+
+/**
+ * ATHLETE PROFILE ROUTES
+ */
+
+Route::get('createathlete', function(){
+    return view('createathlete');
+})->name('createathlete')
+->middleware('auth:athlete');
+
+
+//--------------------------------------------------------------------
