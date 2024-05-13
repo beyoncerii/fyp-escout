@@ -24,6 +24,6 @@ class ProfileController extends Controller
 
         Auth::user()->save();
 
-        return back()->with('success', 'Profile updated successfully');
+        return back()->with('success', 'Profile successfully updated!');
     }
 }

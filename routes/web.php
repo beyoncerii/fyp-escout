@@ -64,7 +64,7 @@ Route::get('/homeadmin', function(){
  * PROFILE ROUTES
  */
 
- Route::post('editprofile', [ProfileController::class, 'editprofile'])
+ Route::get('editprofile', [ProfileController::class, 'editprofile'])
  ->name('editprofile')
  ->middleware('auth:athlete');
 

@@ -17,7 +17,7 @@
         <p class="alert alert-success">{{session('success')}}</p>
         @endif
 
-        <form action="{{route ('editprofile-store'), Auth::user()->id}}" method="POST">
+        <form action="{{route ('editprofile-store', Auth::user()->id)}}" method="POST">
         @csrf
 
         @if ($errors -> any())
