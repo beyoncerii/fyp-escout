@@ -13,15 +13,27 @@
 
 <h1>Edit your profile </h1>
 
+        @if (session('success'))
+        <p class="alert alert-success">{{session('success')}}</p>
+        @endif
 
-      <form >
+        <form action="{{route ('editprofile-store'), Auth::user()->id}}" method="POST">
+        @csrf
+
+        @if ($errors -> any())
+            <p class="alert alert-danger">Please check your input</p>
+        @endif
 
         <div class="row mb-3">
             <label for="inputName" class="col-sm-2 col-form-label">Name</label
             >
             <div class="col-sm-10">
               <input type="text" class="form-control @error('name') is-invalid @enderror"
-              name="name"  value=" " />
+              name="name"  value="{{Auth::user()->name}}" />
+
+              @error('name')
+                <div class="invalid-feedback">{{$message}}</div>
+              @enderror
 
             </div>
           </div>
@@ -31,22 +43,28 @@
           >
           <div class="col-sm-10">
             <input type="email" class="form-control @error('email') is-invalid @enderror"
-            name="email"  value=" " />
+            name="email"  value="{{Auth::user()->email}}" />
 
+            @error('email')
+            <div class="invalid-feedback">{{$message}}</div>
+            @enderror
 
           </div>
         </div>
 
         <div class="row mb-3">
-            <label for="phone" class="col-sm-2 col-form-label">Phone Number</label
+            <label for="phone" class="col-sm-2 col-form-label">Phone Num.(+60) </label
             >
             <div class="col-sm-10">
-              <input type="tel" pattern="[0-9]{3}[0-9]{2}[0-9]{3}" class="form-control @error('phone') is-invalid @enderror"
-              name="phone"  value=" " />
+              <input type="tel"  class="form-control @error('phone') is-invalid @enderror"
+              name="phone"  value="{{Auth::user()->phone}}" />
 
+              @error('phone')
+              <div class="invalid-feedback">{{$message}}</div>
+              @enderror
 
             </div>
-          </div>
+        </div>
 
         <br/>
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
   /* form  */
 
 h1 {
@@ -6,20 +6,11 @@ h1 {
     margin-bottom: 20px;
 }
 
-body{
-    font-family: 'Montserrat';
-    /* font-weight: 500; */
-}
-  .navbar-profile {
-    margin-left: 0; /* left the second navbar items horizontally */
-    display: flex;
-    flex-direction: row;
-    background-color:  rgba(227, 237, 247, 0.548);
-  }
+
 
   .container-sm {
     margin-top: 100px;
-     min-height: 50vh; /*Center vertically on the page */
+    min-height: 50vh; /*Center vertically on the page */
     background-color: rgba(227, 237, 247, 0.548);/*Add a semi-transparent white background to make the form more readable */
     padding: 20px;
   }
@@ -32,19 +23,6 @@ body{
     }
   }
 
-
-
-  .navbar-profile .nav-link {
-    color: #343a40; /* Set text color for links */
-    font-weight: bold; /* Make text bold */
-    padding: 0 20px 0 10px; /* Add padding to the navbar items */
-  }
-
-
-
-  .navbar-profile .active {
-    font-weight: bold;
-  }
 
   .button {
     display: block;

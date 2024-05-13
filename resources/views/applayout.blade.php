@@ -16,6 +16,41 @@
 
 <body>
     <header class="header">
+
+        @auth
+
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="">
+
+                <strong> Escout</strong>
+              </a>
+              <div class="collapseNavBar navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{url ('homeathlete')}}">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " href="">Our Athletes</a>
+                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link @if (Request::is('editprofile')) active @endif" href="{{url ('editprofile')}}">Profile</a>
+                        </li>
+                      <li class="nav-item">
+                        <form action="{{ route('logout')}}" method="POST">
+                        @csrf
+
+                        <button type="submit" class="btn nav-link">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+        @endauth
+
+        @guest
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
               <a class="navbar-brand" href="">
@@ -37,7 +72,7 @@
               </div>
             </div>
           </nav>
-
+        @endguest
 
 	</header>
 <main>

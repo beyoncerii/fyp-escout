@@ -23,10 +23,6 @@
 
         </div>
 
-        <form action="{{route('logout')}}" method="post">
-            @csrf
-            <button type="submit" class="btn btn-primary mt-2 mb-2">Logout</button>
-        </form>
 
 </div>
 

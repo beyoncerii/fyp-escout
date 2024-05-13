@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisterController;
 
 
@@ -25,21 +26,25 @@ Route::get('/applayout', function () {
     return view('applayout');
 });
 
+/**
+ * HOME ROUTES
+ */
+
 Route::get('/home', function(){
     return view('home');
-});
+})->name('home');
 
 Route::get('/homeathlete', function(){
     return view('homeathlete');
-})->name('homeathlete');
+})->name('homeathlete')
+->middleware('auth:athlete');
+
 
 Route::get('/homeadmin', function(){
     return view('homeadmin');
 });
 
-Route::get('/editprofile', function(){
-    return view('editprofile');
-});
+//---------------------------------------------------------
 
 /**
  * AUTHENTICATION ROUTES
@@ -51,6 +56,20 @@ Route::get('/editprofile', function(){
  Route::get('/login', [LoginController::class, 'index'])->name('login');
  Route::post('/login', [LoginController::class, 'store'])->name('login-store');
 
-    Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
+ Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
 
 //  -------------------------------------------------------------------
+
+/**
+ * PROFILE ROUTES
+ */
+
+ Route::post('editprofile', [ProfileController::class, 'editprofile'])
+ ->name('editprofile')
+ ->middleware('auth:athlete');
+
+Route::post('/editprofile/{id}', [ProfileController::class, 'updateprofile'])
+ ->name('editprofile-store')
+ ->middleware('auth:athlete');
+
+//--------------------------------------------------------------------

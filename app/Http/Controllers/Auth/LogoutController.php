@@ -12,7 +12,7 @@ class LogoutController extends Controller
     public function store()
     {
         Auth::guard('athlete') -> logout();
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 
 }
