@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('height')->nullable();
             $table->double('weight')->nullable();
             $table->string('position')->nullable();
+            $table->foreignId('level_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -19,7 +19,7 @@
 
         <div class="button">
 
-                <a class="btn btn-primary mt-2 mb-2"  href=" " style="text-decoration: none; color:white"> Create Athlete Profile </a>
+                <a class="btn btn-primary mt-2 mb-2"  href="{{route('createathlete')}}" style="text-decoration: none; color:white"> Create Athlete Profile </a>
 
         </div>
 

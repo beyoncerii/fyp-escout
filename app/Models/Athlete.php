@@ -37,5 +37,10 @@ class Athlete extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function level()
+    {
+        return $this->has(Level::class, 'level_id');
+    }
+
 
 }
