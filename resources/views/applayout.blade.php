@@ -33,8 +33,12 @@
                       <li class="nav-item">
                         <a class="nav-link " href="">Our Athletes</a>
                       </li>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link " href="{{route ('athleteprofile')}}">My Profile</a>
+                    </li>
                         <li class="nav-item">
-                            <a class="nav-link @if (Request::is('editprofile')) active @endif" href="{{url ('editprofile')}}">Profile</a>
+                            <a class="nav-link @if (Request::is('editprofile')) active @endif" href="{{url ('editprofile')}}">Account</a>
                         </li>
                       <li class="nav-item">
                         <form action="{{ route('logout')}}" method="POST">
@@ -60,7 +64,7 @@
               <div class="collapseNavBar navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href=" ">Home</a>
+                        <a class="nav-link " href="{{ route('home')}}">Home</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link " href="">Our Athletes</a>

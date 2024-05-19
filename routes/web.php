@@ -26,6 +26,8 @@ Route::get('/applayout', function () {
     return view('applayout');
 });
 
+//---------------------------------------------------------
+
 /**
  * HOME ROUTES
  */
@@ -82,8 +84,14 @@ Route::get('createathlete', [ProfileController::class, 'createathlete'])
 ->name('createathlete')
 ->middleware('auth:athlete');
 
+Route::get('/athleteprofile', [ProfileController::class, 'index'])
+->name('athleteprofile')
+->middleware('auth:athlete');
+
 Route::post('storeathlete', [ProfileController::class, 'storeathlete'])
 ->name('store-athlete')
 ->middleware('auth:athlete');
+
+
 
 //--------------------------------------------------------------------

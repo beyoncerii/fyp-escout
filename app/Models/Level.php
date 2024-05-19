@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Level;
+use App\Models\Athlete;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Level extends Model
 {
@@ -11,6 +13,6 @@ class Level extends Model
 
     public function athletes()
     {
-        return $this->belongsToMany (Athlete::class);
+        return $this->hasMany(Athlete::class, 'level_id')->withDefault();
     }
 }

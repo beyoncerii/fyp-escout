@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Level;
 use App\Models\Athlete;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -39,7 +40,8 @@ class Athlete extends Authenticatable
 
     public function level()
     {
-        return $this->has(Level::class, 'level_id');
+        //return $this->hasMany(Athlete::class, 'level_id', 'id');
+        return $this->belongsTo(Level::class, 'level_id')->withDefault();
     }
 
 
