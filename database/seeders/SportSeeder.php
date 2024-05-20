@@ -17,6 +17,10 @@ class SportSeeder extends Seeder
             ['name' => 'Netball'],
             ['name' => 'Football'],
             ['name' => 'Basketball'],
+            ['name' => 'Volleyball'],
+            ['name' => 'Handball'],
+            ['name' => 'Rugby'],
+            ['name' => 'Frisbee'],
         ];
 
         Sport::insert($sports);

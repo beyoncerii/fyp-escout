@@ -14,9 +14,12 @@ class LevelSeeder extends Seeder
     public function run(): void
     {
         $levels = [
+            ['name' => 'District'],
             ['name' => 'State'],
             ['name' => 'National'],
             ['name' => 'International'],
+            ['name' => 'Amateur'],
+            ['name' => 'Professional'],
         ];
 
         Level::insert($levels);

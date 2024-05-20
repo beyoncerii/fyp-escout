@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Level;
+use App\Models\Skill;
 use App\Models\Athlete;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -47,6 +48,10 @@ class Athlete extends Authenticatable
     public function sports()
     {
         return $this->belongsToMany(Sport::class);
+    }
+
+    public function skills() {
+        return $this->hasOne(Skill::class, 'athlete_id');
     }
 
 

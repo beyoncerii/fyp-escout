@@ -38,11 +38,6 @@
                     <input type="text" id="position" name="position" value="{{ old('position') }}" required class="form-control">
                 </div>
 
-                {{-- <div class="mb-3">
-                    <label for="image" class="form-label">Upload Image:</label>
-                    <input type="file" id="image" name="image" accept="image/*" required class="form-control">
-                </div> --}}
-
                 <div class="mb-3">
                     <label for="level" class="form-label">Level:</label>
                     <select id="level" name="level" required class="form-control">
@@ -65,9 +60,37 @@
                 </div>
                 <div>
                     <label for="sports">Skills:</label> <br>
-                    <label for="speed">Speed:</label>
+
+                    <label for="strength">Please select the strength (1-5):</label><br>
+                    <input type="range" id="strength" name="strength" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
+                    <br>
+
+
+                    <label for="speed">Please select the speed (1-5):</label><br>
                     <input type="range" id="speed" name="speed" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
                     <output>3</output>
+                    <br>
+
+                    <label for="endurance">Please select the endurance (1-5):</label><br>
+                    <input type="range" id="endurance" name="endurance" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
+                    <br>
+
+                    <label for="focus">Please select the focus (1-5):</label><br>
+                    <input type="range" id="focus" name="focus" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
+                    <br>
+
+                    <label for="reflex">Please select the reflex (1-5):</label><br>
+                    <input type="range" id="reflex" name="reflex" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
+                    <br>
+                </div>
+
+                <div class="mb-3">
+                    <label for="image" class="form-label">Upload Image:</label>
+                    <input type="file" id="image" name="image" accept="image/*" required class="form-control">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

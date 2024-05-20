@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Level;
+use App\Models\Skill;
 use App\Models\Sport;
 use App\Models\Athlete;
 use Illuminate\Http\Request;
@@ -11,29 +12,18 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    // public function index()
-    // {
-    //     $user_id = Auth::guard('athlete')->user()->id;
-    //     $level = Level::find($level_id);
-    //     $level_id = Auth::guard('athlete')->user()->level_id;
-    //     return view('athleteprofile', compact('level'));
-    // }
-
     public function index()
     {
-        // $user_id = Auth::guard('athlete')->user()->id;
-        // $athlete = Athlete::find($user_id);
+
 
         $level_id = Auth::guard('athlete')->user()->level_id;
         $level = Level::find($level_id);
-
         $sports = Auth::user()->sports;
-        // $sport_id = Auth::guard('athlete')->user()->sport_id;
-        // $sport = Sport::find($sport_id);
+        $skills = Auth::user()->skills;
 
-        return view('athleteprofile', compact('level','sports'));
-        // $level = $athlete->level; // Assuming the user has only one level, if there are multiple levels, you may need to adjust this part accordingly
-        // return view('athleteprofile', compact('level'));
+
+        return view('athleteprofile', compact('level','sports', 'skills'));
+
     }
 
     public function editprofile(){
@@ -59,7 +49,7 @@ class ProfileController extends Controller
     public function createathlete(){
 
         if(Auth::user()->status == 'pending' || Auth::user()->status == 'approved'){
-            return redirect()->route('athleteprofile')->with('error', 'You have request to created an athlete profile!');
+            return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
         }
 else{
         $levels = Level::all();
@@ -79,15 +69,35 @@ else{
         Auth::user()->position = $request->position;
         Auth::user()->level_id = $request->level;
         Auth::user()->level_id = $request->level;
+        Auth::user()->image = $request->image;
         Auth::user()->status = 'pending';
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img/' . 'profile_image'), $imageName);
+            Auth::user() ->image = 'img/' . 'profile_image/'. $imageName;
+        }
 
         Auth::user()->save();
 
 
         $selectedSports = $request->input('sports');
 
-        // Attach the selected sports to the athlete
+        $validatedData = $request->validate([
+            'strength' => 'required|integer|min:1|max:5',
+            'speed' => 'required|integer|min:1|max:5',
+            'endurance' => 'required|integer|min:1|max:5',
+            'focus' => 'required|integer|min:1|max:5',
+            'reflex' => 'required|integer|min:1|max:5',
+        ]);
+
+        $validatedData['athlete_id'] = Auth::id();
+
+        Skill::create($validatedData);
+
         Auth::user()->sports()->attach($selectedSports);
+
 
         return redirect()->route('athleteprofile')->with('success', 'Athlete successfully created!');
 
