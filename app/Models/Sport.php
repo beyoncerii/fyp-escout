@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sport extends Model
 {
-    use HasFactory;
+    public function athletes()
+    {
+        return $this->belongsToMany(Athlete::class);
+    }
 }

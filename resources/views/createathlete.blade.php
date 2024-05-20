@@ -13,11 +13,11 @@
             <!-- Centering the row horizontally -->
             @if ($errors->any())
                 <div class="alert alert-danger">
-                    <ul>
+
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            {{ $error }}
                         @endforeach
-                    </ul>
+
                 </div>
             @endif
             <form method="POST" action="{{ route('store-athlete')}}" enctype="multipart/form-data">
@@ -52,6 +52,22 @@
                         <option value="{{ $level->id }}" >{{ $level->name }}</option>
                         @endforeach
                     </select>
+                </div>
+
+                <div>
+                    <label for="sports">Sports:</label>
+                    @foreach ($sports as $sport)
+                        <div>
+                            <input type="checkbox" name="sports[]" id="sport-{{ $sport->id }}" value="{{ $sport->id }}">
+                            <label for="sport-{{ $sport->id }}">{{ $sport->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+                <div>
+                    <label for="sports">Skills:</label> <br>
+                    <label for="speed">Speed:</label>
+                    <input type="range" id="speed" name="speed" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
+                    <output>3</output>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

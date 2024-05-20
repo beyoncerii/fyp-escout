@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('endurance');
             $table->integer('focus');
             $table->integer('reflex');
+            $table->foreignId('athlete_id');
             $table->timestamps();
         });
     }

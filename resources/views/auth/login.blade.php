@@ -45,7 +45,8 @@
 
         <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Login</button>
         <!-- your form fields here -->
-        <button class="btn btn-primary col-lg-12 col-12 mt-2 mb-2"  ><a href="{{url('register')}}" style="text-decoration: none; color:white">Register to EScout</a></button>
+        <a class="btn btn-primary col-lg-12 col-12 mt-2 mb-2" href="{{url('register')}}" style="text-decoration: none; color:white">Register to EScout</a>
+
 </div>
 
 

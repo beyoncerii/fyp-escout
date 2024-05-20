@@ -95,3 +95,8 @@ Route::post('storeathlete', [ProfileController::class, 'storeathlete'])
 
 
 //--------------------------------------------------------------------
+
+Route::get('/demo', function (){
+    return view ('demo');
+});
+

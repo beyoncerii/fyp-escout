@@ -44,5 +44,10 @@ class Athlete extends Authenticatable
         return $this->belongsTo(Level::class, 'level_id')->withDefault();
     }
 
+    public function sports()
+    {
+        return $this->belongsToMany(Sport::class);
+    }
+
 
 }
