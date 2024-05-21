@@ -1,10 +1,7 @@
 nav{
     background-color: rgba(227, 237, 247, 0.548);
 }
-strong{
-    color: black;
-    padding-left: 50%;
-}
+
   .navbar-nav {
     margin-left: auto;
     display: flex;

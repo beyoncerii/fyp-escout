@@ -22,6 +22,7 @@ return new class extends Migration
             $table->double('weight')->nullable();
             $table->string('position')->nullable();
             $table->string('status')->nullable();
+            $table->string('achievement')->nullable();
             $table->foreignId('level_id')->nullable();
             $table->rememberToken();
             $table->timestamps();

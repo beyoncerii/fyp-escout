@@ -34,6 +34,14 @@ class ProfileController extends Controller
         return view('athleteprofile');
     }
 
+    public function editathlete(){
+
+        $levels = Level::all();
+        $sports = Sport::all();
+
+        return view('editathlete', compact('levels', 'sports'));
+    }
+
 
     public function updateprofile(Request $request, $id){
 
@@ -58,6 +66,34 @@ else{
     }
     }
 
+    public function updateathlete(Request $request, $id){
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'phone' => 'required|unique:users,phone,'.$id,
+        ]);
+
+        Auth::user()->name = $request->name;
+        Auth::user()->email = $request->email;
+        Auth::user()->phone = $request->phone;
+        Auth::user()->weight = $request->weight;
+        Auth::user()->height = $request->height;
+        Auth::user()->position = $request->position;
+        Auth::user()->level_id = $request->level;
+        Auth::user()->image = $request->image;
+        Auth::user()->achievement = $request->achievement;
+
+        $request->validate([
+            'sports' => 'required|array',
+        ]);
+
+        Auth::user()->save();
+
+        return back()->with('success', 'Profile updated successfully');
+
+    }
+
     public function storeathlete( Request $request){
 
         $request->validate([
@@ -71,6 +107,7 @@ else{
         Auth::user()->level_id = $request->level;
         Auth::user()->image = $request->image;
         Auth::user()->status = 'pending';
+        Auth::user()->achievement = $request->achievement;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');

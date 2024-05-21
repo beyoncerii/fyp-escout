@@ -92,6 +92,14 @@ Route::post('storeathlete', [ProfileController::class, 'storeathlete'])
 ->name('store-athlete')
 ->middleware('auth:athlete');
 
+Route::get('editathlete', [ProfileController::class, 'editathlete'])
+->name('editathlete')
+->middleware('auth:athlete');
+
+Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
+->name('editathlete')
+->middleware('auth:athlete');
+
 
 
 //--------------------------------------------------------------------

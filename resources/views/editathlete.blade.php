@@ -6,42 +6,34 @@
 
     <div class="container-sm">
 
-        <h2>Create Athlete Profile</h2>
+        <h2>Update Athlete Profile</h2>
 
-        <!-- Centering the container and making it smaller -->
         <div>
-            <!-- Centering the row horizontally -->
-            @if ($errors->any())
-                <div class="alert alert-danger">
-
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
-
-                </div>
+            @if (session('success'))
+                <p class="alert alert-success">{{session('success')}}</p>
             @endif
 
-            <form method="POST" action="{{ route('store-athlete')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update-athlete' , Auth::user()->id) }}" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-3">
                     <label for="weight" class="form-label">Weight:</label>
-                    <input type="double" step="any" id="weight" name="weight" value="{{ old('weight') }}" required class="form-control">
+                    <input type="double" step="any" id="weight" name="weight" value="{{ Auth::user()->weight }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="height" class="form-label">Height:</label>
-                    <input type="double" step="any" id="height" name="height" value="{{ old('height') }}" required class="form-control">
+                    <input type="double" step="any" id="height" name="height" value="{{ Auth::user()->height }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="position" class="form-label">Position:</label>
-                    <input type="text" id="position" name="position" value="{{ old('position') }}" required class="form-control">
+                    <input type="text" id="position" name="position" value="{{ Auth::user()->position }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="level" class="form-label">Level:</label>
-                    <select id="level" name="level" required class="form-control">
+                    <select id="level" name="level" >
                         <option value="" disabled selected>Choose your level</option>
 
                         @foreach($levels as $level)
@@ -62,7 +54,7 @@
 
                 <div class="mb-3">
                     <label for="achievement" class="form-label">Achievement:</label>
-                    <textarea id="achievement" name="achievement" required class="form-control">{{ old('achievement') ?? '' }}</textarea>
+                    <textarea id="achievement" name="achievement" >{{ Auth::user()->achievement }}</textarea>
                 </div>
 
                 <div>
@@ -97,10 +89,11 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Upload Image:</label>
-                    <input type="file" id="image" name="image" accept="image/*" required class="form-control">
+                    <input type="file" id="image" name="image" accept="image/*">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+
             </form>
         </div>
     </div>

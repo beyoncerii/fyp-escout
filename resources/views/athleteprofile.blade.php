@@ -21,40 +21,40 @@
         style="width: 100%; height: 300px; object-fit: contain; margin-bottom: 20px">
         @endif
 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th scope="row"><strong>Name:</strong></th>
-                    <td>{{ Auth::user()->name }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><strong>Height:</strong></th>
-                    <td>{{ Auth::user()->height }}cm</td>
-                </tr>
-                <tr>
-                    <th scope="row"><strong>Weight:</strong></th>
-                    <td>{{ Auth::user()->weight }}kg</td>
-                </tr>
-                <tr>
-                    <th scope="row"><strong>Position:</strong></th>
-                    <td>{{ Auth::user()->position }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><strong>Level:</strong></th>
-                    <td>{{ $level->name }}</td>
-                </tr>
-                <tr>
-                    <th scope="row"><strong>Sports:</strong></th>
-                    <td>
-                        <ul>
-                            @foreach ($sports as $sport)
-                                <li>{{ $sport->name }}</li>
-                            @endforeach
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="container-sm">
+            <div>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label"><strong>Name: </strong>{{ Auth::user()->name }}</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="weight" class="form-label"><strong>Weight: </strong> {{ Auth::user()->weight }}kg</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="height" class="form-label"><strong>Height: </strong> {{ Auth::user()->height }}cm</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="position" class="form-label"><strong>Position: </strong> {{ Auth::user()->position }}</label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="sport" class="form-label"><strong>Sports: </strong>
+                        @foreach ($sports as $sport)
+                        <li>{{ $sport->name }}</li>
+                        @endforeach
+                    </label>
+                </div>
+
+                <div class="mb-3">
+                    <label for="achievement" class="form-label"><strong>Achievement: <br>
+                    </strong> {!! nl2br(Auth::user()->achievement) !!}</label>
+                </div>
+
+            </div>
+        </div>
 
         <div class="mb-1">
             <label for="sports" class="form-label"><strong>Skills:</strong></label>
@@ -85,7 +85,12 @@
             <div class="progress-bar" role="progressbar" style="width: {{ $skills->reflex*20 }}%" aria-valuenow="{{$skills->reflex*20 }}" aria-valuemin="0" aria-valuemax="100">{{$skills->reflex*20}}%</div>
         </div>
 
+        <div class="mt-3">
+            <a href="{{ route('editathlete', Auth::user()->id) }}" class="btn btn-primary">Edit Athlete</a>
+        </div>
+
     </div>
+
 </div>
 
 
