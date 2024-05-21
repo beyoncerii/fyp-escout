@@ -97,7 +97,7 @@ Route::get('editathlete', [ProfileController::class, 'editathlete'])
 ->middleware('auth:athlete');
 
 Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
-->name('editathlete')
+->name('update-athlete')
 ->middleware('auth:athlete');
 
 

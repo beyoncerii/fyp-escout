@@ -36,10 +36,14 @@ class ProfileController extends Controller
 
     public function editathlete(){
 
+        $level_id = Auth::guard('athlete')->user()->level_id;
+        $level = Level::find($level_id);
         $levels = Level::all();
         $sports = Sport::all();
+        $sportscurrent = Auth::user()->sports;
+        $skillscurrent = Auth::user()->skills;
 
-        return view('editathlete', compact('levels', 'sports'));
+        return view('editathlete', compact('level','levels', 'sports', 'sportscurrent', 'skillscurrent'));
     }
 
 
@@ -66,32 +70,56 @@ else{
     }
     }
 
-    public function updateathlete(Request $request, $id){
+    public function updateathlete(Request $request, $id)
+    {
+        $athlete = Auth::user();
 
+        // Validate the input data
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'phone' => 'required|unique:users,phone,'.$id,
-        ]);
-
-        Auth::user()->name = $request->name;
-        Auth::user()->email = $request->email;
-        Auth::user()->phone = $request->phone;
-        Auth::user()->weight = $request->weight;
-        Auth::user()->height = $request->height;
-        Auth::user()->position = $request->position;
-        Auth::user()->level_id = $request->level;
-        Auth::user()->image = $request->image;
-        Auth::user()->achievement = $request->achievement;
-
-        $request->validate([
+            'weight' => 'required|numeric',
+            'height' => 'required|numeric',
+            'position' => 'required|string|max:255',
+            'level' => 'required|integer|exists:levels,id',
+            'achievement' => 'nullable|string',
             'sports' => 'required|array',
+            'sports.*' => 'integer|exists:sports,id',
+            'strength' => 'required|integer|min:1|max:5',
+            'speed' => 'required|integer|min:1|max:5',
+            'endurance' => 'required|integer|min:1|max:5',
+            'focus' => 'required|integer|min:1|max:5',
+            'reflex' => 'required|integer|min:1|max:5',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        Auth::user()->save();
+        // Update the authenticated user's profile
+        $athlete->weight = $request->weight;
+        $athlete->height = $request->height;
+        $athlete->position = $request->position;
+        $athlete->level_id = $request->level;
+        $athlete->achievement = $request->achievement;
+
+        // Handle the image upload if present
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img/profile_image'), $imageName);
+            $athlete->image = 'img/profile_image/' . $imageName;
+        }
+
+        // Sync the sports
+        $athlete->sports()->sync($request->sports);
+
+        // Update the skills
+        $validatedData = $request->only(['strength', 'speed', 'endurance', 'focus', 'reflex']);
+        $validatedData['athlete_id'] = $athlete->id;
+
+        // Update or create skills for the athlete
+        $athlete->skills()->updateOrCreate(['athlete_id' => $athlete->id], $validatedData);
+
+        // Save the updated athlete information
+        $athlete->save();
 
         return back()->with('success', 'Profile updated successfully');
-
     }
 
     public function storeathlete( Request $request){
