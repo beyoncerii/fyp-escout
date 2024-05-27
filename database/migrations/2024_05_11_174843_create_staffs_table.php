@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->integer('phone');
             $table->string('password');
-            $table->string('role')->nullable();
+            $table->enum('role', ['coach', 'admin']);
             $table->rememberToken();
             $table->timestamps();
         });

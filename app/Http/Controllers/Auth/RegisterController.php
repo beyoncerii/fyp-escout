@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Staff;
 use App\Models\Athlete;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,20 +17,54 @@ class RegisterController extends Controller
     }
 
     public function store(Request $request) {
-        //dd($request);
-
-        $data =$request -> validate([
+        // Validate the common fields
+        $data = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:athletes',
-            'phone' => 'required|max:255|unique:athletes',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('athletes')->ignore($request->email, 'email'),
+                Rule::unique('staffs')->ignore($request->email, 'email'),
+            ],
+            'phone' => [
+                'required',
+                'max:255',
+                Rule::unique('athletes')->ignore($request->phone, 'phone'),
+                Rule::unique('staffs')->ignore($request->phone, 'phone'),
+            ],
             'password' => 'required|confirmed',
+            'role' => 'required|in:athlete,coach,admin', // New field for role
         ]);
 
         $data['password'] = Hash::make($data['password']);
 
-        Athlete::create($data);
+        // Save to the respective table based on the role
+        if ($data['role'] === 'athlete') {
+            Athlete::create($data);
+            return redirect('/login');
 
-        return redirect('/login');
+        } else {
+            Staff::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'password' => $data['password'],
+                'role' => $data['role'],
+            ]);
+
+            if ($data['role'] === 'coach') {
+                return redirect()->route('homecoach');
+            } else if ($data['role'] === 'admin') {
+                return redirect()->route('homeadmin');
+            }
+        }
+
+            if ($data['role'] === 'coach') {
+                return redirect()->route('homecoach');
+            } else if ($data['role'] === 'admin') {
+                return redirect()->route('homecoach');
+            }
 
     }
 }

@@ -119,7 +119,7 @@ else{
         // Save the updated athlete information
         $athlete->save();
 
-        return back()->with('success', 'Profile updated successfully');
+        return redirect()->route('athleteprofile')->with('success', 'Profile updated successfully');
     }
 
     public function storeathlete( Request $request){

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Staff;
+use App\Models\Athlete;
+
 return [
 
     /*
@@ -50,6 +53,17 @@ return [
             'driver' => 'session',
             'provider' => 'athletes',
         ],
+
+        'coach' => [
+            'driver' => 'session',
+            'provider' => 'staff',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'staff',
+        ],
+
     ],
 
 
@@ -79,7 +93,12 @@ return [
 
         'athletes' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Athlete::class,
+            'model' => Athlete::class,
+        ],
+
+        'staffs' => [
+            'driver' => 'eloquent',
+            'model' => Staff::class,
         ],
 
         // 'users' => [

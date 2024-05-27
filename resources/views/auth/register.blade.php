@@ -75,13 +75,20 @@
         @enderror
     </div>
 
-    {{-- <div class="form-group">
-        <label for="role">Register As</label>
-        <select class="form-control" id="role" required>
-        <option value="coach">Coach</option>
-        <option value="athlete">Athlete</option>
+    <div>
+        <label for="role">Role</label>
+        <select name="role" id="role" required>
+            <option value="">Select Role</option>
+            <option value="athlete" {{ old('role') == 'athlete' ? 'selected' : '' }}>Athlete</option>
+            <option value="coach" {{ old('role') == 'coach' ? 'selected' : '' }}>Coach</option>
+            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
         </select>
-    </div> --}}
+
+        @error('role')
+            <span>{{ $message }}</span>
+        @enderror
+    </div>
+
 
     <div class="button">
 

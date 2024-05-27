@@ -41,6 +41,10 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="level" class="form-label"><strong>Level: </strong> {{$level->name}}</label>
+                </div>
+
+                <div class="mb-3">
                     <label for="sport" class="form-label"><strong>Sports: </strong>
                         @foreach ($sports as $sport)
                         <li>{{ $sport->name }}</li>

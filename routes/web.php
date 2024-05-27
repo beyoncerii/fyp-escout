@@ -44,7 +44,14 @@ Route::get('/homeathlete', function(){
 
 Route::get('/homeadmin', function(){
     return view('homeadmin');
-});
+})->name('homeadmin')
+->middleware('auth:staff');
+
+Route::get('/homecoach', function(){
+    return view('homecoach');
+})->name('homecoach')
+->middleware('auth:staff');
+
 
 //---------------------------------------------------------
 
