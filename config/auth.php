@@ -96,7 +96,7 @@ return [
             'model' => Athlete::class,
         ],
 
-        'staffs' => [
+        'staff' => [
             'driver' => 'eloquent',
             'model' => Staff::class,
         ],

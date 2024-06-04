@@ -25,16 +25,16 @@ class RegisterController extends Controller
                 'email',
                 'max:255',
                 Rule::unique('athletes')->ignore($request->email, 'email'),
-                Rule::unique('staffs')->ignore($request->email, 'email'),
+                Rule::unique('staff')->ignore($request->email, 'email'),
             ],
             'phone' => [
                 'required',
                 'max:255',
                 Rule::unique('athletes')->ignore($request->phone, 'phone'),
-                Rule::unique('staffs')->ignore($request->phone, 'phone'),
+                Rule::unique('staff')->ignore($request->phone, 'phone'),
             ],
             'password' => 'required|confirmed',
-            'role' => 'required|in:athlete,coach,admin', // New field for role
+            'role' => 'required', // New field for role
         ]);
 
         $data['password'] = Hash::make($data['password']);
@@ -45,26 +45,30 @@ class RegisterController extends Controller
             return redirect('/login');
 
         } else {
-            Staff::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'phone' => $data['phone'],
-                'password' => $data['password'],
-                'role' => $data['role'],
-            ]);
+            Staff::create($data);
+            //     'name' => $data['name'],
+            //     'email' => $data['email'],
+            //     'phone' => $data['phone'],
+            //     'password' => $data['password'],
+            //     'role' => $data['role'],
+            // ]);
 
-            if ($data['role'] === 'coach') {
-                return redirect()->route('homecoach');
-            } else if ($data['role'] === 'admin') {
-                return redirect()->route('homeadmin');
-            }
-        }
+            return redirect('/login');
 
-            if ($data['role'] === 'coach') {
-                return redirect()->route('homecoach');
-            } else if ($data['role'] === 'admin') {
-                return redirect()->route('homecoach');
-            }
+        //     if ($data['role'] === 'coach') {
+        //         return redirect()->route('homecoach');
+        //     } else if ($data['role'] === 'admin') {
+        //         return redirect()->route('homeadmin');
+        //     }
+        // }
+
+        //     if ($data['role'] === 'coach') {
+        //         return redirect()->route('homecoach');
+        //     } else if ($data['role'] === 'admin') {
+        //         return redirect()->route('homecoach');
+        //     }
 
     }
+}
+
 }
