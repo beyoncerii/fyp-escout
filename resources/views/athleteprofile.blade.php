@@ -10,14 +10,14 @@
 @endif
 
     <div class="mb-2" style="margin-top: 10px; text-align: center; background-color: rgba(253, 253, 253, 0.808)">
-            <h3>Player Name: {{ Auth::user()->name }}</h3>
+            <h3>Player Name: {{ Auth::guard('athlete')->user()->name }}</h3>
     </div>
 
     <div class="container-sm" style=" margin-top: 20px; min-height: 50vh; background-color: rgba(253, 253, 253, 0.808); padding: 20px;}">
     <div>
 
-        @if (Auth::user()->image)
-        <img src="{{ asset(Auth::user()->image) }}" class="card-img-top" alt="Profile Image"
+        @if (Auth::guard('athlete')->user()->image)
+        <img src="{{ asset(Auth::guard('athlete')->user()->image) }}" class="card-img-top" alt="Profile Image"
         style="width: 100%; height: 300px; object-fit: contain; margin-bottom: 20px">
         @endif
 
@@ -25,19 +25,19 @@
             <div>
 
                 <div class="mb-3">
-                    <label for="name" class="form-label"><strong>Name: </strong>{{ Auth::user()->name }}</label>
+                    <label for="name" class="form-label"><strong>Name: </strong>{{ Auth::guard('athlete')->user()->name }}</label>
                 </div>
 
                 <div class="mb-3">
-                    <label for="weight" class="form-label"><strong>Weight: </strong> {{ Auth::user()->weight }}kg</label>
+                    <label for="weight" class="form-label"><strong>Weight: </strong> {{ Auth::guard('athlete')->user()->weight }}kg</label>
                 </div>
 
                 <div class="mb-3">
-                    <label for="height" class="form-label"><strong>Height: </strong> {{ Auth::user()->height }}cm</label>
+                    <label for="height" class="form-label"><strong>Height: </strong> {{ Auth::guard('athlete')->user()->height }}cm</label>
                 </div>
 
                 <div class="mb-3">
-                    <label for="position" class="form-label"><strong>Position: </strong> {{ Auth::user()->position }}</label>
+                    <label for="position" class="form-label"><strong>Position: </strong> {{ Auth::guard('athlete')->user()->position }}</label>
                 </div>
 
                 <div class="mb-3">
@@ -54,7 +54,7 @@
 
                 <div class="mb-3">
                     <label for="achievement" class="form-label"><strong>Achievement: <br>
-                    </strong> {!! nl2br(Auth::user()->achievement) !!}</label>
+                    </strong> {!! nl2br(Auth::guard('athlete')->user()->achievement) !!}</label>
                 </div>
 
             </div>
@@ -90,7 +90,7 @@
         </div>
 
         <div class="mt-3">
-            <a href="{{ route('editathlete', Auth::user()->id) }}" class="btn btn-primary">Edit Athlete</a>
+            <a href="{{ route('editathlete', Auth::guard('athlete')->user()->id) }}" class="btn btn-primary">Edit Athlete</a>
         </div>
 
     </div>

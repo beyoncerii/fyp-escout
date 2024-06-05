@@ -16,6 +16,9 @@
 
 <body>
     <header class="header">
+
+        @auth
+
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
               <a class="navbar-brand" href="">
@@ -30,6 +33,36 @@
                       <li class="nav-item">
                         <a class="nav-link " href="">Our Athletes</a>
                       </li>
+
+                    <li>
+                        <form action="{{ route('logout')}}" method="POST">
+                            @csrf
+
+                            <button type="submit" class="btn nav-link">Logout</button>
+                            </form>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+        @endauth
+
+        @guest
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="">
+
+                <strong> Escout</strong>
+              </a>
+              <div class="collapseNavBar navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ route('home')}}">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " href="">Our Athletes</a>
+                      </li>
                       <li class="nav-item">
                         <a class="nav-link " href="{{url ('login')}}">Login</a>
                     </li>
@@ -37,6 +70,7 @@
               </div>
             </div>
           </nav>
+        @endguest
 
 
 	</header>

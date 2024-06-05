@@ -13,7 +13,7 @@ class Staff extends Authenticatable{
 
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $guard = 'coach';
+    protected $guard = 'staff';
 
     protected $fillable = [
         'name', 'email', 'phone', 'password', 'role',

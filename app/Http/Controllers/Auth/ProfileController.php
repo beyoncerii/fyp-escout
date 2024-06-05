@@ -18,8 +18,12 @@ class ProfileController extends Controller
 
         $level_id = Auth::guard('athlete')->user()->level_id;
         $level = Level::find($level_id);
-        $sports = Auth::user()->sports;
-        $skills = Auth::user()->skills;
+        $sports = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->sports : [];
+        $skills = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->skills : [];
+        // $sports = Auth::guard('athlete')->sports;
+        // $skills = Auth::guard('athlete')->skills;
+        // $sports = Auth::guard('athlete')->user()->sports;
+        // $skills = Auth::guard('athlete')->user()->skills;
 
 
         return view('athleteprofile', compact('level','sports', 'skills'));
@@ -40,8 +44,8 @@ class ProfileController extends Controller
         $level = Level::find($level_id);
         $levels = Level::all();
         $sports = Sport::all();
-        $sportscurrent = Auth::user()->sports;
-        $skillscurrent = Auth::user()->skills;
+        $sportscurrent = Auth::guard('athlete')->user()->sports;
+        $skillscurrent = Auth::guard('athlete')->user()->skills;
 
         return view('editathlete', compact('level','levels', 'sports', 'sportscurrent', 'skillscurrent'));
     }
@@ -49,18 +53,18 @@ class ProfileController extends Controller
 
     public function updateprofile(Request $request, $id){
 
-        Auth::user()->name = $request->name;
-        Auth::user()->email = $request->email;
-        Auth::user()->phone = $request->phone;
+        Auth::guard('athlete')->user()->name = $request->name;
+        Auth::guard('athlete')->user()->email = $request->email;
+        Auth::guard('athlete')->user()->phone = $request->phone;
 
-        Auth::user()->save();
+        Auth::guard('athlete')->user()->save();
 
         return back()->with('success', 'Profile successfully updated!');
     }
 
     public function createathlete(){
 
-        if(Auth::user()->status == 'pending' || Auth::user()->status == 'approved'){
+        if(Auth::guard('athlete')->user()->status == 'Pending' || Auth::guard('athlete')->user()->status == 'approved'){
             return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
         }
 else{
@@ -72,7 +76,7 @@ else{
 
     public function updateathlete(Request $request, $id)
     {
-        $athlete = Auth::user();
+        $athlete = Auth::guard('athlete')->user();
 
         // Validate the input data
         $request->validate([
@@ -128,23 +132,23 @@ else{
             'sports' => 'required|array',
         ]);
 
-        Auth::user()->weight = $request->weight;
-        Auth::user()->height = $request->height;
-        Auth::user()->position = $request->position;
-        Auth::user()->level_id = $request->level;
-        Auth::user()->level_id = $request->level;
-        Auth::user()->image = $request->image;
-        Auth::user()->status = 'pending';
-        Auth::user()->achievement = $request->achievement;
+        Auth::guard('athlete')->user()->weight = $request->weight;
+        Auth::guard('athlete')->user()->height = $request->height;
+        Auth::guard('athlete')->user()->position = $request->position;
+        Auth::guard('athlete')->user()->level_id = $request->level;
+        Auth::guard('athlete')->user()->level_id = $request->level;
+        Auth::guard('athlete')->user()->image = $request->image;
+        Auth::guard('athlete')->user()->status = 'Pending';
+        Auth::guard('athlete')->user()->achievement = $request->achievement;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('img/' . 'profile_image'), $imageName);
-            Auth::user() ->image = 'img/' . 'profile_image/'. $imageName;
+            Auth::guard('athlete')->user() ->image = 'img/' . 'profile_image/'. $imageName;
         }
 
-        Auth::user()->save();
+        Auth::guard('athlete')->user()->save();
 
 
         $selectedSports = $request->input('sports');
@@ -161,7 +165,7 @@ else{
 
         Skill::create($validatedData);
 
-        Auth::user()->sports()->attach($selectedSports);
+        Auth::guard('athlete')->user()->sports()->attach($selectedSports);
 
 
         return redirect()->route('athleteprofile')->with('success', 'Athlete successfully created!');

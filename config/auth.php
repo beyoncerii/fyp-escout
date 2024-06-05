@@ -54,15 +54,15 @@ return [
             'provider' => 'athletes',
         ],
 
-        'coach' => [
+        'staff' => [
             'driver' => 'session',
             'provider' => 'staff',
         ],
 
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'staff',
-        ],
+        // 'admin' => [
+        //     'driver' => 'session',
+        //     'provider' => 'staff',
+        // ],
 
     ],
 
