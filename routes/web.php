@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 Route::get('/applayout', function () {
     return view('applayout');
-});
+})->middleware(['auth']);
 
 //---------------------------------------------------------
 
@@ -92,8 +92,8 @@ Route::get('createathlete', [ProfileController::class, 'createathlete'])
 ->middleware('auth:athlete');
 
 Route::get('/athleteprofile', [ProfileController::class, 'index'])
-->name('athleteprofile')
-->middleware('auth:athlete');
+    ->name('athleteprofile')
+    ->middleware('auth');
 
 Route::post('storeathlete', [ProfileController::class, 'storeathlete'])
 ->name('store-athlete')
@@ -108,6 +108,31 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
 ->middleware('auth:athlete');
 
 
+
+//--------------------------------------------------------------------
+
+
+/**
+ * COACH PROFILE ROUTES
+ */
+
+//--------------------------------------------------------------------
+
+/**
+ * ADMIN ROUTES
+ */
+
+ Route::get('/viewrequest', [ProfileController::class, 'viewrequest'])
+->name('viewrequest')
+->middleware('auth:staff');
+
+Route::post('/acceptathlete/{id}', [ProfileController::class, 'acceptAthlete'])
+->name('acceptathlete')
+->middleware('auth:staff');
+
+Route::post('/rejectathlete/{id}', [ProfileController::class, 'rejectAthlete'])
+->name('rejectathlete')
+->middleware('auth:staff');
 
 //--------------------------------------------------------------------
 

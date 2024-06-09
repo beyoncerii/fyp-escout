@@ -171,4 +171,38 @@ else{
         return redirect()->route('athleteprofile')->with('success', 'Athlete successfully created!');
 
     }
+
+    public function viewrequest(){
+        $athletes = Athlete::all(); // or any other query to retrieve the athletes you want
+
+        return view('viewrequest', [
+            'athletes' => $athletes
+        ]);
+    }
+
+        public function acceptAthlete(Request $request, $id)
+    {
+        $athlete = Athlete::find($id);
+        $athlete->status = 'Approved';
+        $athlete->save();
+        return back()->with('success', 'Athlete approved successfully!');
+    }
+
+    public function rejectAthlete(Request $request, $id)
+    {
+        $athlete = Athlete::find($id);
+        $athlete->status = 'Rejected';
+        $athlete->save();
+        return back()->with('success', 'Athlete rejected successfully!');
+    }
+
+    // public function viewrequest(){
+    //     $athlete = Auth::guard('athlete')->user();
+    //     $athletes = Athlete::all();
+
+    //     return view('viewrequest', [
+    //         'athlete' => $athlete
+    //     ]);
+    // }
+
 }

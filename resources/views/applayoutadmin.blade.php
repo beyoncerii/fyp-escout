@@ -34,7 +34,7 @@
                         <a class="nav-link " href="">Our Athletes</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link " href=" ">Profile Request</a>
+                        <a class="nav-link " href="{{ route('viewrequest')}} ">Profile Request</a>
                       </li>
                     <li>
                         <form action="{{ route('logout')}}" method="POST">
