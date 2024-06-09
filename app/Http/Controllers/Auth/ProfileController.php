@@ -196,6 +196,12 @@ else{
         return back()->with('success', 'Athlete rejected successfully!');
     }
 
+        public function viewAthletes()
+    {
+        $athletes = Athlete::paginate(10);
+        return view('listathletes', compact('athletes'));
+    }
+
     // public function viewrequest(){
     //     $athlete = Auth::guard('athlete')->user();
     //     $athletes = Athlete::all();

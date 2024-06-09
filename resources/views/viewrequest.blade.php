@@ -21,27 +21,26 @@
 
                 <tbody>
 
-                    @foreach ($athletes as $athlete)
-    <tr>
-        <td style="text-align: center;">{{ $athlete->id }}</td>
-        <td style="text-align: center;">{{ $athlete->name }}</td>
-        <td style="text-align: center;">{{ $athlete->created_at }}</td>
-        <td style="text-align: center;"><a href="{{ route('athleteprofile') }}">Click Here</a></td>
-        <td style="text-align: center;">
-            <form action="{{ route('acceptathlete', $athlete->id) }}" method="POST">
-                @csrf
-                @method('GET')
-                <button type="submit" class="btn btn-success">Accept</button>
-            </form>
-            <form action="{{ route('rejectathlete', $athlete->id) }}" method="GET">
-                @csrf
-                @method('GET')
-                <button type="submit" class="btn btn-danger">Reject</button>
-            </form>
-        </td>
-        <td style="text-align: center;">{{ $athlete->status}}</td>
-    </tr>
-@endforeach
+                @foreach ($athletes as $athlete)
+                <tr>
+                    <td style="text-align: center;">{{ $athlete->id }}</td>
+                    <td style="text-align: center;">{{ $athlete->name }}</td>
+                    <td style="text-align: center;">{{ $athlete->created_at }}</td>
+                    <td style="text-align: center;"><a href="{{ route('athleteprofile') }}">Click Here</a></td>
+                    <td style="text-align: center;">
+                        <form action="{{ route('acceptathlete', $athlete->id) }}" method="POST" style="display: inline-block;">
+                            @csrf <!-- Add this line -->
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+
+                        <form action="{{ route('rejectathlete', $athlete->id) }}" method="POST" style="display: inline-block;">
+                            @csrf <!-- Add this line -->
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    </td>
+                    <td style="text-align: center;">{{ $athlete->status}}</td>
+                </tr>
+                @endforeach
 
                 </tbody>
               </table>

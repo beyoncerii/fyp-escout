@@ -52,6 +52,8 @@ Route::get('/homecoach', function(){
 })->name('homecoach')
 ->middleware('auth:staff');
 
+Route::get('listathletes', [ProfileController::class, 'viewAthletes'])
+->name('listathletes');
 
 //---------------------------------------------------------
 
@@ -93,7 +95,7 @@ Route::get('createathlete', [ProfileController::class, 'createathlete'])
 
 Route::get('/athleteprofile', [ProfileController::class, 'index'])
     ->name('athleteprofile')
-    ->middleware('auth');
+    ->middleware('auth:athlete');
 
 Route::post('storeathlete', [ProfileController::class, 'storeathlete'])
 ->name('store-athlete')
@@ -115,6 +117,7 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
 /**
  * COACH PROFILE ROUTES
  */
+
 
 //--------------------------------------------------------------------
 

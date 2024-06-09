@@ -16,6 +16,13 @@
     <div class="container-sm" style=" margin-top: 20px; min-height: 50vh; background-color: rgba(253, 253, 253, 0.808); padding: 20px;}">
     <div>
 
+        <div class="mb-3">
+            <div style="float: right; margin-top: -30px;">
+                <span style="font-weight: bold;">Status: </span>
+                <span>{{ Auth::guard('athlete')->user()->status }}</span>
+            </div>
+        </div>
+
         @if (Auth::guard('athlete')->user()->image)
         <img src="{{ asset(Auth::guard('athlete')->user()->image) }}" class="card-img-top" alt="Profile Image"
         style="width: 100%; height: 300px; object-fit: contain; margin-bottom: 20px">

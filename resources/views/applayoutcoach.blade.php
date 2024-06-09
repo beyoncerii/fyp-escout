@@ -61,7 +61,7 @@
                         <a class="nav-link " href="{{ route('home')}}">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link " href="">Our Athletes</a>
+                        <a class="nav-link " href="{{ route ('listathletes')}}">Our Athletes</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link " href="{{url ('login')}}">Login</a>
