@@ -15,16 +15,10 @@ class ProfileController extends Controller
     public function index()
     {
 
-
         $level_id = Auth::guard('athlete')->user()->level_id;
         $level = Level::find($level_id);
         $sports = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->sports : [];
         $skills = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->skills : [];
-        // $sports = Auth::guard('athlete')->sports;
-        // $skills = Auth::guard('athlete')->skills;
-        // $sports = Auth::guard('athlete')->user()->sports;
-        // $skills = Auth::guard('athlete')->user()->skills;
-
 
         return view('athleteprofile', compact('level','sports', 'skills'));
 
@@ -202,13 +196,14 @@ else{
         return view('listathletes', compact('athletes'));
     }
 
-    // public function viewrequest(){
-    //     $athlete = Auth::guard('athlete')->user();
-    //     $athletes = Athlete::all();
+    public function athleteprofileAdmin(){
+        $athlete = Auth::guard('athlete')->user();
+        $level_id = $athlete->level_id;
+        $level = Level::find($level_id);
+        $sports = $athlete->sports;
+        $skills = $athlete->skills;
 
-    //     return view('viewrequest', [
-    //         'athlete' => $athlete
-    //     ]);
-    // }
+        return view('athleteprofile2', compact('athlete', 'level', 'sports', 'skills'));
+    }
 
 }

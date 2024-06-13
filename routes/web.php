@@ -137,6 +137,14 @@ Route::post('/rejectathlete/{id}', [ProfileController::class, 'rejectAthlete'])
 ->name('rejectathlete')
 ->middleware('auth:staff');
 
+Route::get('dashboard', function(){
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('athleteprofile2', [ProfileController::class, 'athleteprofileAdmin'])
+    ->name('athleteprofile2')
+    ->middleware('auth:staff');
+
 //--------------------------------------------------------------------
 
 Route::get('/demo', function (){

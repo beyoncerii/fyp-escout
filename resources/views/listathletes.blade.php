@@ -39,13 +39,10 @@
                         </div>
                     </div>
 
-                    @if (($loop->index + 1) % 3 == 0) <!-- Add a clearfix div after every 3 athletes -->
-                        <div class="clearfix"></div>
-                    @endif
-
                 @endif <!-- End of if statement -->
 
             @endforeach
+
         </div>
     </div>
 

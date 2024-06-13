@@ -1,0 +1,26 @@
+body {
+    overflow: hidden;
+  }
+
+ .row.content {
+    height: calc(100vh - 50px); /* subtract the height of the navbar */
+  }
+
+ .sidenav {
+    background-color: rgba(158, 151, 151, 0.788);
+    height: 100vh;
+    overflow-y: auto;
+    top: auto; /* adjust the top position to match the height of the navbar */
+    width: 25%; /* adjust the width to your liking */
+  }
+
+  .col-sm-9 {
+    padding-left: 25%; /* adjust the padding to match the width of the sidebar */
+  }
+
+  /* On small screens, set height to 'auto' for the grid */
+  @media screen and (max-width: 767px) {
+   .row.content {
+      height: auto;
+    }
+  }
