@@ -3,14 +3,16 @@ body {
   }
 
  .row.content {
-    height: calc(100vh - 50px); /* subtract the height of the navbar */
+    height: calc(100vh - 50px);
+    /* subtract the height of the navbar */
   }
 
  .sidenav {
     background-color: rgba(158, 151, 151, 0.788);
     height: 100vh;
     overflow-y: auto;
-    top: auto; /* adjust the top position to match the height of the navbar */
+    /* top: auto;  */
+    /* adjust the top position to match the height of the navbar */
     width: 25%; /* adjust the width to your liking */
   }
 
@@ -19,8 +21,4 @@ body {
   }
 
   /* On small screens, set height to 'auto' for the grid */
-  @media screen and (max-width: 767px) {
-   .row.content {
-      height: auto;
-    }
-  }
+

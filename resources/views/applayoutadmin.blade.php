@@ -17,7 +17,7 @@
 <body>
     <header class="header">
 
-        @auth
+        @auth('staff')
 
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
@@ -50,7 +50,7 @@
 
         @endauth
 
-        @guest
+        @guest('staff')
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
               <a class="navbar-brand" href="">

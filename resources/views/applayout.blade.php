@@ -17,7 +17,7 @@
 <body>
     <header class="header">
 
-        @auth
+        @auth('athlete')
 
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
@@ -35,7 +35,7 @@
                     </li>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link " href="{{route ('athleteprofile')}}">My Profile</a>
+                            <a class="nav-link " href="{{route ('athleteprofile2' , Auth::guard('athlete')->user()->id)}}">My Profile</a>
                     </li>
                         <li class="nav-item">
                             <a class="nav-link @if (Request::is('editprofile')) active @endif" href="{{url ('editprofile')}}">Account</a>
@@ -54,7 +54,7 @@
 
         @endauth
 
-        @guest
+        @guest('athlete')
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
               <a class="navbar-brand" href="">

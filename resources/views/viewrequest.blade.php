@@ -15,7 +15,6 @@
                     <th scope="col" style="text-align: center;">Request Date</th>
                     <th scope="col" style="text-align: center;">Profile Link</th>
                     <th scope="col" style="text-align: center;">Action</th>
-                    <th scope="col" style="text-align: center;">Status</th>
                   </tr>
                 </thead>
 
@@ -26,7 +25,13 @@
                     <td style="text-align: center;">{{ $athlete->id }}</td>
                     <td style="text-align: center;">{{ $athlete->name }}</td>
                     <td style="text-align: center;">{{ $athlete->created_at }}</td>
-                    <td style="text-align: center;"><a href="{{ route('athleteprofile2') }}">Click Here</a></td>
+                    <td style="text-align: center;"><a href="{{ route('athleteprofile2' , $athlete->id)  }}">Click Here</a></td>
+
+                    @if ($athlete->status == 'Approved' || $athlete->status == 'Rejected')
+
+                    <td style="text-align: center;">{{$athlete->status}}</td>
+
+                    @else
                     <td style="text-align: center;">
                         <form action="{{ route('acceptathlete', $athlete->id) }}" method="POST" style="display: inline-block;">
                             @csrf <!-- Add this line -->
@@ -38,7 +43,7 @@
                             <button type="submit" class="btn btn-danger">Reject</button>
                         </form>
                     </td>
-                    <td style="text-align: center;">{{$athlete->status}}</td>
+                    @endif
                 </tr>
                 @endforeach
 

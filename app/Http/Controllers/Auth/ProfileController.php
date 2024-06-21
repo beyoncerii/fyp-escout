@@ -196,8 +196,9 @@ else{
         return view('listathletes', compact('athletes'));
     }
 
-    public function athleteprofileAdmin(){
-        $athlete = Auth::guard('athlete')->user();
+    public function athleteprofileAdmin($id)
+    {
+        $athlete = Athlete::find($id);
         $level_id = $athlete->level_id;
         $level = Level::find($level_id);
         $sports = $athlete->sports;

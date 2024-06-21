@@ -1,4 +1,18 @@
-@extends('applayout')
+@php
+    if (auth('athlete')->check()) {
+        $layout = 'applayout';
+    } elseif (auth('staff')->check()) {
+        $user = auth('staff')->user();
+        if ($user->role == 'admin') {
+            $layout = 'applayoutadmin';
+        } elseif ($user->role == 'coach') {
+            $layout = 'applayoutcoach';
+        }
+    }else
+        $layout = 'applayout';
+@endphp
+
+@extends($layout)
 
 @section('content')
 
@@ -31,7 +45,7 @@
                                     <a type="submit"
                                     class="btn btn-primary btn-sm"
                                     style="margin-top: 10px; margin-right: 10px; margin-bottom: 10px;"
-                                    href="{{ route('athleteprofile', $athlete->id) }}"
+                                    href="{{ route('athleteprofile2', $athlete->id) }}"
                                     >View</a>
                                 </div>
 
@@ -47,3 +61,5 @@
     </div>
 
 @endsection
+
+

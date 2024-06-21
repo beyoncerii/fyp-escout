@@ -141,9 +141,14 @@ Route::get('dashboard', function(){
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('athleteprofile2', [ProfileController::class, 'athleteprofileAdmin'])
-    ->name('athleteprofile2')
-    ->middleware('auth:staff');
+Route::group(['middleware' => ['checkrole']], function () {
+    Route::get('athleteprofile2/{id}', [ProfileController::class, 'athleteprofileAdmin'])
+->name('athleteprofile2');
+});
+
+// Route::get('athleteprofile2/{id}', [ProfileController::class, 'athleteprofileAdmin'])
+// ->name('athleteprofile2')
+// ->middleware('auth:staff');
 
 //--------------------------------------------------------------------
 
