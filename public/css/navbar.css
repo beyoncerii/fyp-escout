@@ -24,3 +24,9 @@ body{
     background-size: cover;
 }
 
+.whatsapp-chat{
+    bottom: 10px;
+    left: 10px;
+    position: fixed;
+}
+

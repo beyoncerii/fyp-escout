@@ -56,115 +56,139 @@ class ProfileController extends Controller
         return back()->with('success', 'Profile successfully updated!');
     }
 
-    public function createathlete(){
+    public function createathlete()
+{
+    $athlete = Auth::guard('athlete')->user();
 
-        if(Auth::guard('athlete')->user()->status == 'Pending' || Auth::guard('athlete')->user()->status == 'approved'){
-            return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
-        }
-else{
-        $levels = Level::all();
-        $sports = Sport::all();
-        return view('createathlete', compact('levels', 'sports'));
-    }
+    // Check if the user has already requested to create an athlete profile and has been approved or is pending
+    if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
+        return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
     }
 
-    public function updateathlete(Request $request, $id)
-    {
-        $athlete = Auth::guard('athlete')->user();
-
-        // Validate the input data
-        $request->validate([
-            'weight' => 'required|numeric',
-            'height' => 'required|numeric',
-            'position' => 'required|string|max:255',
-            'level' => 'required|integer|exists:levels,id',
-            'achievement' => 'nullable|string',
-            'sports' => 'required|array',
-            'sports.*' => 'integer|exists:sports,id',
-            'strength' => 'required|integer|min:1|max:5',
-            'speed' => 'required|integer|min:1|max:5',
-            'endurance' => 'required|integer|min:1|max:5',
-            'focus' => 'required|integer|min:1|max:5',
-            'reflex' => 'required|integer|min:1|max:5',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-        // Update the authenticated user's profile
-        $athlete->weight = $request->weight;
-        $athlete->height = $request->height;
-        $athlete->position = $request->position;
-        $athlete->level_id = $request->level;
-        $athlete->achievement = $request->achievement;
-
-        // Handle the image upload if present
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/profile_image'), $imageName);
-            $athlete->image = 'img/profile_image/' . $imageName;
-        }
-
-        // Sync the sports
-        $athlete->sports()->sync($request->sports);
-
-        // Update the skills
-        $validatedData = $request->only(['strength', 'speed', 'endurance', 'focus', 'reflex']);
-        $validatedData['athlete_id'] = $athlete->id;
-
-        // Update or create skills for the athlete
-        $athlete->skills()->updateOrCreate(['athlete_id' => $athlete->id], $validatedData);
-
-        // Save the updated athlete information
-        $athlete->save();
-
-        return redirect()->route('athleteprofile')->with('success', 'Profile updated successfully');
+    // If the user has been rejected, allow them to create a new profile
+    if ($athlete->status == 'Rejected') {
+        // Clear previous sports associations and skills
+        $athlete->sports()->detach();
+        $athlete->skills()->delete();
     }
 
-    public function storeathlete( Request $request){
-
-        $request->validate([
-            'sports' => 'required|array',
-        ]);
-
-        Auth::guard('athlete')->user()->weight = $request->weight;
-        Auth::guard('athlete')->user()->height = $request->height;
-        Auth::guard('athlete')->user()->position = $request->position;
-        Auth::guard('athlete')->user()->level_id = $request->level;
-        Auth::guard('athlete')->user()->level_id = $request->level;
-        Auth::guard('athlete')->user()->image = $request->image;
-        Auth::guard('athlete')->user()->status = 'Pending';
-        Auth::guard('athlete')->user()->achievement = $request->achievement;
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/' . 'profile_image'), $imageName);
-            Auth::guard('athlete')->user() ->image = 'img/' . 'profile_image/'. $imageName;
-        }
-
-        Auth::guard('athlete')->user()->save();
+    $levels = Level::all();
+    $sports = Sport::all();
+    return view('createathlete', compact('levels', 'sports'));
+}
 
 
-        $selectedSports = $request->input('sports');
 
-        $validatedData = $request->validate([
-            'strength' => 'required|integer|min:1|max:5',
-            'speed' => 'required|integer|min:1|max:5',
-            'endurance' => 'required|integer|min:1|max:5',
-            'focus' => 'required|integer|min:1|max:5',
-            'reflex' => 'required|integer|min:1|max:5',
-        ]);
+public function updateathlete(Request $request, $id)
+{
+    $athlete = Auth::guard('athlete')->user();
 
-        $validatedData['athlete_id'] = Auth::id();
+    // Validate the input data
+    $request->validate([
+        'weight' => 'required|numeric',
+        'height' => 'required|numeric',
+        'position' => 'required|string|max:255',
+        'level' => 'required|integer|exists:levels,id',
+        'achievement' => 'nullable|string',
+        'sports' => 'required|array',
+        'sports.*' => 'integer|exists:sports,id',
+        'strength' => 'required|integer|min:1|max:5',
+        'speed' => 'required|integer|min:1|max:5',
+        'endurance' => 'required|integer|min:1|max:5',
+        'focus' => 'required|integer|min:1|max:5',
+        'reflex' => 'required|integer|min:1|max:5',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        Skill::create($validatedData);
+    // Update the authenticated user's profile
+    $athlete->weight = $request->weight;
+    $athlete->height = $request->height;
+    $athlete->position = $request->position;
+    $athlete->level_id = $request->level;
+    $athlete->achievement = $request->achievement;
 
-        Auth::guard('athlete')->user()->sports()->attach($selectedSports);
-
-
-        return redirect()->route('athleteprofile')->with('success', 'Athlete successfully created!');
-
+    // Handle the image upload if present
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('img/profile_image'), $imageName);
+        $athlete->image = 'img/profile_image/' . $imageName;
     }
+
+    // Sync the sports
+    $athlete->sports()->sync($request->sports);
+
+    // Update the skills
+    $validatedData = $request->only(['strength', 'speed', 'endurance', 'focus', 'reflex']);
+    $validatedData['athlete_id'] = $athlete->id;
+
+    // Update or create skills for the athlete
+    $athlete->skills()->updateOrCreate(['athlete_id' => $athlete->id], $validatedData);
+
+    // Save the updated athlete information
+    $athlete->save();
+
+    return redirect()->route('athleteprofile')->with('success', 'Profile updated successfully');
+}
+
+
+    public function storeathlete(Request $request)
+{
+    $athlete = Auth::guard('athlete')->user();
+
+    // Check if the user has already requested to create an athlete profile and has been approved or is pending
+    if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
+        return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
+    }
+
+    // Validate the input data
+    $request->validate([
+        'sports' => 'required|array',
+        'weight' => 'required|numeric',
+        'height' => 'required|numeric',
+        'position' => 'required|string|max:255',
+        'level' => 'required|integer|exists:levels,id',
+        'achievement' => 'nullable|string',
+        'strength' => 'required|integer|min:1|max:5',
+        'speed' => 'required|integer|min:1|max:5',
+        'endurance' => 'required|integer|min:1|max:5',
+        'focus' => 'required|integer|min:1|max:5',
+        'reflex' => 'required|integer|min:1|max:5',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
+
+    // Update the authenticated user's profile
+    $athlete->weight = $request->weight;
+    $athlete->height = $request->height;
+    $athlete->position = $request->position;
+    $athlete->level_id = $request->level;
+    $athlete->achievement = $request->achievement;
+
+    // Handle the image upload if present
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('img/profile_image'), $imageName);
+        $athlete->image = 'img/profile_image/' . $imageName;
+    }
+
+    // Save the athlete's information
+    $athlete->status = 'Pending';
+    $athlete->save();
+
+    // Attach selected sports
+    $selectedSports = $request->input('sports');
+    $athlete->sports()->sync($selectedSports);
+
+    // Save the skills
+    $validatedData = $request->only(['strength', 'speed', 'endurance', 'focus', 'reflex']);
+    $validatedData['athlete_id'] = $athlete->id;
+    Skill::updateOrCreate(['athlete_id' => $athlete->id], $validatedData);
+
+    return redirect()->route('athleteprofile')->with('success', 'Athlete profile successfully created!');
+}
+
+
 
     public function viewrequest(){
         $athletes = Athlete::all(); // or any other query to retrieve the athletes you want
@@ -190,11 +214,64 @@ else{
         return back()->with('success', 'Athlete rejected successfully!');
     }
 
-        public function viewAthletes()
+    public function viewAthletes(Request $request)
     {
-        $athletes = Athlete::paginate(10);
-        return view('listathletes', compact('athletes'));
+        $query = Athlete::query();
+
+        if ($request->has('level') && $request->level != '') {
+            $query->where('level_id', $request->level);
+        }
+
+        if ($request->has('sport') && $request->sport != '') {
+            $query->whereHas('sports', function ($q) use ($request) {
+                $q->where('sports.id', $request->sport);
+            });
+        }
+
+        if ($request->has('min_weight') && $request->min_weight != '') {
+            $query->where('weight', '>=', $request->min_weight);
+        }
+
+        if ($request->has('max_weight') && $request->max_weight != '') {
+            $query->where('weight', '<=', $request->max_weight);
+        }
+
+        if ($request->has('min_height') && $request->min_height != '') {
+            $query->where('height', '>=', $request->min_height);
+        }
+
+        if ($request->has('max_height') && $request->max_height != '') {
+            $query->where('height', '<=', $request->max_height);
+        }
+
+        if ($request->has('min_skill') && $request->min_skill != '') {
+            $query->where(function($q) use ($request) {
+                $q->where('skills->strength', '>=', $request->min_skill / 20)
+                    ->orWhere('skills->speed', '>=', $request->min_skill / 20)
+                    ->orWhere('skills->endurance', '>=', $request->min_skill / 20)
+                    ->orWhere('skills->focus', '>=', $request->min_skill / 20)
+                    ->orWhere('skills->reflex', '>=', $request->min_skill / 20);
+            });
+        }
+
+        if ($request->has('max_skill') && $request->max_skill != '') {
+            $query->where(function($q) use ($request) {
+                $q->where('skills->strength', '<=', $request->max_skill / 20)
+                    ->orWhere('skills->speed', '<=', $request->max_skill / 20)
+                    ->orWhere('skills->endurance', '<=', $request->max_skill / 20)
+                    ->orWhere('skills->focus', '<=', $request->max_skill / 20)
+                    ->orWhere('skills->reflex', '<=', $request->max_skill / 20);
+            });
+        }
+
+        $athletes = $query->where('status', 'Approved')->get();
+
+        $levels = Level::all();
+        $sports = Sport::all();
+
+        return view('listathletes', compact('athletes', 'levels', 'sports'));
     }
+
 
     public function athleteprofileAdmin($id)
     {

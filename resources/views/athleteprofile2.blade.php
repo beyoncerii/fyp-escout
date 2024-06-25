@@ -112,9 +112,33 @@
 
         @auth('staff')
             @if (auth('staff')->user() && auth('staff')->user()->role == 'coach')
-                <div class="mt-3">
-                    <a href="{{ route('editathlete', $athlete->id) }}" class="btn btn-primary">Scout</a>
+
+            {{-- <form action=" " method="POST" style="margin-top: 3%" >
+                @csrf
+                <div class ="mb-3">
+                    <label for="message" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control "
+                    name="phone" value="0{{ $athlete->phone}}"
+                    required>
                 </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="3" required>You are scouted by {{ auth('staff')->user()->name }}.</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Scout</button>
+            </form> --}}
+            {{-- https://api.whatsapp.com/send?phone=60176059047&text=You%27re%20scouted!
+            https://api.whatsapp.com/send?phone=60176059047text=You%27re%20scouted! --}}
+            <a  class="btn btn-primary" href="https://api.whatsapp.com/send?phone=60{{ $athlete->phone}}&text=You're scouted!"
+                style="margin-top: 10px;"
+                onclick="return confirmScout();">Scout</a>
+
+            <script>
+                function confirmScout() {
+                    return confirm('Are you sure you want to scout this athlete?');
+                }
+            </script>
+
             @endif
         @endauth
 
@@ -128,6 +152,20 @@
         @endauth
 
     </div>
+
+    <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/667a45929d7f358570d308e7/1i16pvhd9';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 
 </div>
 

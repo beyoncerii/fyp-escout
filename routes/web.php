@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ScoutController;
+use App\Http\Controllers\SmsTwilioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
@@ -117,6 +119,11 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
 /**
  * COACH PROFILE ROUTES
  */
+
+
+// Route::get('/scout', [ScoutController::class, 'showForm'])->name('scout.form');
+// Route::post('/scout', [ScoutController::class, 'sendSMS'])->name('scout.send');
+
 
 
 //--------------------------------------------------------------------

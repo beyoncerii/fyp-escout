@@ -75,13 +75,12 @@
         @enderror
     </div>
 
-    <div>
-        <label for="role">Role</label>
+    <div style="margin-top: 2%">
+        <label for="role">Register as: </label>
         <select name="role" id="role" required>
             <option value="">Select Role</option>
             <option value="athlete" {{ old('role') == 'athlete' ? 'selected' : '' }}>Athlete</option>
             <option value="coach" {{ old('role') == 'coach' ? 'selected' : '' }}>Coach</option>
-            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
         </select>
 
         @error('role')
