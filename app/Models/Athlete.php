@@ -22,6 +22,7 @@ class Athlete extends Authenticatable
         'email',
         'phone',
         'password',
+        'remarks',
     ];
 
     protected $hidden = [
@@ -52,6 +53,11 @@ class Athlete extends Authenticatable
 
     public function skills() {
         return $this->hasOne(Skill::class, 'athlete_id');
+    }
+
+    public function scouts()
+    {
+        return $this->hasMany(Scout::class, 'athlete_id');
     }
 
 

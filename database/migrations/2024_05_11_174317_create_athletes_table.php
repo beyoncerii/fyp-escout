@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('achievement')->nullable();
             $table->foreignId('level_id')->nullable();
+            $table->string('remarks')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

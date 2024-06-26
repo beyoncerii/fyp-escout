@@ -43,4 +43,9 @@ class Staff extends Authenticatable{
         return $this->role === 'coach';
     }
 
+    public function scouts()
+    {
+        return $this->hasMany(Scout::class, 'staff_id');
+    }
+
 }

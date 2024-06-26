@@ -5,7 +5,6 @@ h1 {
 
 /* Center the form on the page */
   .container-sm {
-    margin-top: 30px;
     min-height: 50vh; /* Center vertically on the page */
     background-color: rgba(227, 237, 247, 0.548);;/* Add a semi-transparent white background to make the form more readable */
     padding: 10px;
@@ -16,5 +15,8 @@ h1 {
   @media (min-width: 768px) {
     .container-sm {
       max-width: 600px; /* Adjust the maximum width as needed */
+      max-height: fit-content;
     }
   }
+
+

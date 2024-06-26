@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\AthleteApproved;
+use App\Mail\AthleteRejected;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScoutController;
 use App\Http\Controllers\SmsTwilioController;
@@ -21,8 +23,8 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 Route::get('/applayout', function () {
     return view('applayout');
@@ -124,6 +126,9 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
 // Route::get('/scout', [ScoutController::class, 'showForm'])->name('scout.form');
 // Route::post('/scout', [ScoutController::class, 'sendSMS'])->name('scout.send');
 
+Route::get('/listscouted', [ScoutController::class, 'listscouted'])
+->name('listscouted')
+->middleware('auth:staff');
 
 
 //--------------------------------------------------------------------
@@ -159,7 +164,20 @@ Route::group(['middleware' => ['checkrole']], function () {
 
 //--------------------------------------------------------------------
 
-Route::get('/demo', function (){
-    return view ('demo');
-});
+Route::get('/demo/{id}', [ProfileController::class, 'athleteprofiledemo'])
+->name('demo');
 
+Route::post('/coach/scout', [ScoutController::class, 'store'])
+->name('coach-scout');
+
+/**
+ * EMAIL ROUTES
+ */
+
+    // Route::get('/send-email', [ProfileController::class, 'acceptathlete']);
+
+    // Route::get('/mail/athletereject', function(){
+    //     return AthleteRejected();
+    // });
+
+ //--------------------------------------------------------------------

@@ -89,7 +89,7 @@
                     <output>3</output>
                     <br>
 
-                    <label for="reflex">Please select the reflex (1-5):</label><br>
+<label for="reflex">Please select the reflex (1-5):</label><br>
                     <input type="range" id="reflex" name="reflex" min="1" max="5" value="3" oninput="this.nextElementSibling.value = this.value">
                     <output>3</output>
                     <br>

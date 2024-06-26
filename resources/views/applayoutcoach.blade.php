@@ -28,10 +28,10 @@
               <div class="collapseNavBar navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href=" ">Home</a>
+                        <a class="nav-link " href="{{ route('homecoach')}} ">Home</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link " href="">Ini Coach</a>
+                        <a class="nav-link " href="{{ route('listscouted')}}">My Athletes</a>
                       </li>
 
                     <li>

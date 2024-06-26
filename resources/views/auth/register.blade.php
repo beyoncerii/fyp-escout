@@ -10,9 +10,9 @@
 <link rel="stylesheet" href="{{asset('css/register.css')}}" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-<div class="container-sm">
+<div class="container-sm" style="margin-top: 2%">
 <div class="registerform">
-    <h1 class="title">Register</h1>
+    <h1 class="title">Register to Escout!</h1>
 
     <form action="{{ route('register-store')}}" method="post">
     @csrf
@@ -91,9 +91,12 @@
 
     <div class="button">
 
-        <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Register</button>
+        <button type="submit" class="btn btn-success col-lg-12 col-12 mt-3 mb-3">Register</button>
         <!-- your form fields here -->
-        <a class="btn btn-primary col-lg-12 col-12 mt-2 mb-2" href="{{url('login')}}" style="text-decoration: none; color:white">Back to Login</a>
+
+        <div class="form-text text-center text-dark">Already registered? <a href="{{url('login')}}" class="text-dark fw-bold"> Back to Login</a>
+        </div>
+
 </div>
 
 
