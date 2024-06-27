@@ -21,7 +21,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="">
+              <a class="navbar-brand" href="{{ route('home')}}">
 
                 <strong> Escout</strong>
               </a>

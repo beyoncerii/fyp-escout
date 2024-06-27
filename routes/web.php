@@ -30,6 +30,11 @@ Route::get('/applayout', function () {
     return view('applayout');
 })->middleware(['auth']);
 
+Route::get('test', function () {
+    return view('test');
+})->name('test');
+
+
 //---------------------------------------------------------
 
 /**
@@ -163,4 +168,23 @@ Route::group(['middleware' => ['checkrole']], function () {
 Route::post('/coach/scout', [ScoutController::class, 'store'])
 ->name('coach-scout');
 
+
+
+Route::group(['middleware' => ['checkrole']], function () {
+    Route::get('demo/{id}', [ProfileController::class, 'athleteprofiledemo'])
+->name('demo');
+});
+
+Route::get('createathlete', [ProfileController::class, 'createathlete'])
+->name('createathlete')
+->middleware('auth:athlete');
+
+
+Route::get('test', function(){
+    return view('test');
+})->name('test');
+
+Route::get('test2', function(){
+    return view('test2');
+})->name('test2');
 

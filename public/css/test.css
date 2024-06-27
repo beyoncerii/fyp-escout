@@ -1,0 +1,26 @@
+
+    /* .container-sm {
+        min-height: 50vh;
+        background-color: rgba(227, 237, 247, 0.548);;
+        padding: 10px;
+      } */
+
+    .right-box header {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .progress {
+        height: 25px;
+    }
+
+    .page {
+        display: none;
+    }
+
+    .page.active {
+        display: block;
+    }
+
+
+
