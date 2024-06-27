@@ -19,63 +19,44 @@
 
 @section('content')
 
-    <div class="container" style="margin-top: 20px;">
-        <form method="GET" action="{{ route('listathletes') }}" class="mb-4">
-            <div class="row">
-                <!-- Filter by Level -->
-                <div class="col-md-3">
-                    <label for="level">Level</label>
-                    <select id="level" name="level" class="form-control">
-                        <option value="">All Levels</option>
-                        @foreach($levels as $level)
-                            <option value="{{ $level->id }}">{{ $level->name }}</option>
-                        @endforeach
-                    </select>
+<div class="container" style="margin-top: 20px;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="GET" action="{{ route('listathletes') }}" class="mb-4" style="background-color: #ffffff; padding: 20px; border-radius: 8px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="search">Search Athletes</label>
+                        <input type="text" id="search" name="search" class="form-control" value="{{ Request::get('search') }}" placeholder="Enter Athlete Name">
+                    </div>
+                    <!-- Filter by Level -->
+                    <div class="col-md-3">
+                        <label for="level">Level</label>
+                        <select id="level" name="level" class="form-control">
+                            <option value="">All Levels</option>
+                            @foreach($levels as $level)
+                                <option value="{{ $level->id }}" {{ Request::get('level') == $level->id ? 'selected' : '' }}>{{ $level->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Filter by Sport -->
+                    <div class="col-md-3">
+                        <label for="sport">Sport</label>
+                        <select id="sport" name="sport" class="form-control">
+                            <option value="">All Sports</option>
+                            @foreach($sports as $sport)
+                                <option value="{{ $sport->id }}" {{ Request::get('sport') == $sport->id ? 'selected' : '' }}>{{ $sport->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Button -->
+                    <div class="col-md-2 align-self-end">
+                        <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                    </div>
                 </div>
-                <!-- Filter by Sport -->
-                <div class="col-md-3">
-                    <label for="sport">Sport</label>
-                    <select id="sport" name="sport" class="form-control">
-                        <option value="">All Sports</option>
-                        @foreach($sports as $sport)
-                            <option value="{{ $sport->id }}">{{ $sport->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <!-- Filter by Weight Range -->
-                <div class="col-md-3">
-                    <label for="min_weight">Min Weight (kg)</label>
-                    <input type="number" id="min_weight" name="min_weight" class="form-control" placeholder="Min Weight">
-                </div>
-                <div class="col-md-3">
-                    <label for="max_weight">Max Weight (kg)</label>
-                    <input type="number" id="max_weight" name="max_weight" class="form-control" placeholder="Max Weight">
-                </div>
-                <!-- Filter by Height Range -->
-                <div class="col-md-3 mt-3">
-                    <label for="min_height">Min Height (cm)</label>
-                    <input type="number" id="min_height" name="min_height" class="form-control" placeholder="Min Height">
-                </div>
-                <div class="col-md-3 mt-3">
-                    <label for="max_height">Max Height (cm)</label>
-                    <input type="number" id="max_height" name="max_height" class="form-control" placeholder="Max Height">
-                </div>
-                <!-- Filter by Skill Percentages -->
-                <div class="col-md-3 mt-3">
-                    <label for="min_skill">Min Skill (%)</label>
-                    <input type="number" id="min_skill" name="min_skill" class="form-control" placeholder="Min Skill" min="0" max="100">
-                </div>
-                <div class="col-md-3 mt-3">
-                    <label for="max_skill">Max Skill (%)</label>
-                    <input type="number" id="max_skill" name="max_skill" class="form-control" placeholder="Max Skill" min="0" max="100">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+    </div>
+
 
         <div class="row">
             @foreach ($athletes as $athlete)
@@ -91,7 +72,7 @@
                                 <p class="card-text"><strong>Weight:</strong> {{ $athlete->weight }} kg</p>
                                 <p class="card-text"><strong>Level:</strong> {{ $athlete->level->name }}</p>
                                 <div class="text-center">
-                                    <a href="{{ route('athleteprofile2', $athlete->id) }}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{ route('demo', $athlete->id) }}" class="btn btn-primary btn-sm">View</a>
                                 </div>
                             </div>
                         </div>
@@ -101,12 +82,6 @@
         </div>
     </div>
 
-    <div class="whatsapp-chat">
-        <a href="https://wa.me/+60176059047?text=You%20are%20scouted%20in%20Escout!" target="_blank">
-            <img src="{{ asset ('img/whatsapp-logo.png')}}" alt="whatsapp-logo" height="50px" width="50px">
-        </a>
-
-    </div>
 
     <!--Start of Tawk.to Script-->
 <script type="text/javascript">

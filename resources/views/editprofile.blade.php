@@ -11,7 +11,7 @@
     <div>
       <!-- Centering the row horizontally -->
 
-<h1>Edit your profile </h1>
+<h2>Edit your account details </h2>
 
         @if (session('success'))
         <p class="alert alert-success">{{session('success')}}</p>
@@ -49,27 +49,33 @@
             <div class="invalid-feedback">{{$message}}</div>
             @enderror
 
+            <small class="text-muted">Format: example@gmail.com</small>
+
           </div>
         </div>
 
         <div class="row mb-3">
-            <label for="phone" class="col-sm-2 col-form-label">Phone Num.(+60) </label
-            >
+            <label for="phone" class="col-sm-2 col-form-label">Phone Num.(+60) </label>
             <div class="col-sm-10">
-              <input type="tel"  class="form-control @error('phone') is-invalid @enderror"
-              name="phone"  value="{{Auth::user()->phone}}" />
+                <input type="tel" class="form-control @error('phone') is-invalid @enderror"
+                       id="phone" name="phone" value="0{{ old('phone', Auth::user()->phone) }}"
+                       pattern="01[0-9]{8,9}" title="01x-xxx xxxx"/>
 
-              @error('phone')
-              <div class="invalid-feedback">{{$message}}</div>
-              @enderror
+                @error('phone')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
 
+                <small class="form-text text-muted">
+                    Format: 01x-xxx xxxx
+                </small>
             </div>
         </div>
 
-        <br/>
-
-        <button type="submit" class="btn btn-primary">UPDATE</button
-        ><br /><br />
+        <div class="row mb-3">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-success float-end">UPDATE</button>
+            </div>
+        </div>
       </form>
 
     </div>

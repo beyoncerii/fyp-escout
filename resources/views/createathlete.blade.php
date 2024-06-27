@@ -36,7 +36,7 @@
 
                 <div class="mb-3">
                     <label for="position" class="form-label">Position:</label>
-                    <input type="text" id="position" name="position" value="{{ old('position') }}" required class="form-control">
+                    <textarea id="position" name="position" required class="form-control">{{ old('position') ?? '' }}</textarea>
                 </div>
 
                 <div class="mb-3">

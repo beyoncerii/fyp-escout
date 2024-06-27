@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $sports = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->sports : [];
         $skills = Auth::guard('athlete')->user() ? Auth::guard('athlete')->user()->skills : [];
 
-        return view('athleteprofile', compact('level','sports', 'skills'));
+        return view('demo', compact('level','sports', 'skills'));
 
     }
 
@@ -70,7 +70,7 @@ class ProfileController extends Controller
 
         // Check if the user has already requested to create an athlete profile and has been approved or is pending
         if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
-            return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
+            return redirect()->route('demo', ['id' => $athlete->id])->with('error', 'You already made your own athlete profile!');
         }
 
         // If the user has been rejected, allow them to create a new profile
@@ -136,7 +136,7 @@ class ProfileController extends Controller
         // Save the updated athlete information
         $athlete->save();
 
-        return redirect()->route('athleteprofile')->with('success', 'Profile updated successfully');
+        return redirect()->route('demo', ['id' => $athlete->id])->with('success', 'Profile updated successfully');
     }
 
     //store athlete profile
@@ -146,7 +146,7 @@ class ProfileController extends Controller
 
         // Check if the user has already requested to create an athlete profile and has been approved or is pending
         if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
-            return redirect()->route('athleteprofile')->with('error', 'You already made your own athlete profile!');
+            return redirect()->route('demo', ['id' => $athlete->id])->with('error', 'You already made your own athlete profile!');
         }
 
         // Validate the input data
@@ -194,7 +194,7 @@ class ProfileController extends Controller
         Skill::updateOrCreate(['athlete_id' => $athlete->id], $validatedData);
 
 
-        return redirect()->route('athleteprofile2', ['id' => $athlete->id])->with('success', 'Athlete profile successfully created!');
+        return redirect()->route('demo', ['id' => $athlete->id])->with('success', 'Athlete profile successfully created!');
     }
 
 
@@ -249,7 +249,6 @@ class ProfileController extends Controller
             return back()->with('success', 'Athlete rejected successfully!');
         }
 
-        //view all athlete profile (list)
         public function viewAthletes(Request $request)
         {
             $query = Athlete::query();
@@ -264,40 +263,8 @@ class ProfileController extends Controller
                 });
             }
 
-            if ($request->has('min_weight') && $request->min_weight != '') {
-                $query->where('weight', '>=', $request->min_weight);
-            }
-
-            if ($request->has('max_weight') && $request->max_weight != '') {
-                $query->where('weight', '<=', $request->max_weight);
-            }
-
-            if ($request->has('min_height') && $request->min_height != '') {
-                $query->where('height', '>=', $request->min_height);
-            }
-
-            if ($request->has('max_height') && $request->max_height != '') {
-                $query->where('height', '<=', $request->max_height);
-            }
-
-            if ($request->has('min_skill') && $request->min_skill != '') {
-                $query->where(function($q) use ($request) {
-                    $q->where('skills->strength', '>=', $request->min_skill / 20)
-                        ->orWhere('skills->speed', '>=', $request->min_skill / 20)
-                        ->orWhere('skills->endurance', '>=', $request->min_skill / 20)
-                        ->orWhere('skills->focus', '>=', $request->min_skill / 20)
-                        ->orWhere('skills->reflex', '>=', $request->min_skill / 20);
-                });
-            }
-
-            if ($request->has('max_skill') && $request->max_skill != '') {
-                $query->where(function($q) use ($request) {
-                    $q->where('skills->strength', '<=', $request->max_skill / 20)
-                        ->orWhere('skills->speed', '<=', $request->max_skill / 20)
-                        ->orWhere('skills->endurance', '<=', $request->max_skill / 20)
-                        ->orWhere('skills->focus', '<=', $request->max_skill / 20)
-                        ->orWhere('skills->reflex', '<=', $request->max_skill / 20);
-                });
+            if ($request->has('search') && $request->search != '') {
+                $query->where('name', 'like', '%' . $request->search . '%');
             }
 
             $athletes = $query->where('status', 'Approved')->get();
@@ -308,6 +275,7 @@ class ProfileController extends Controller
             return view('listathletes', compact('athletes', 'levels', 'sports'));
         }
 
+
         //view athlete profile by admin
         public function athleteprofileAdmin($id)
         {
@@ -317,7 +285,7 @@ class ProfileController extends Controller
             $sports = $athlete->sports;
             $skills = $athlete->skills;
 
-            return view('athleteprofile2', compact('athlete', 'level', 'sports', 'skills'));
+            return view('demo', compact('athlete', 'level', 'sports', 'skills'));
         }
 
         //view athlete profile (demo) by admin

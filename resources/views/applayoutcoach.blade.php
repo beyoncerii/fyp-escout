@@ -27,12 +27,15 @@
               </a>
               <div class="collapseNavBar navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{ route('homecoach')}} ">Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link " href="{{ route('listscouted')}}">My Athletes</a>
-                      </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('homecoach')}} ">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route ('listathletes')}}">View Athletes</a>
+                          </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route('listscouted')}}">Scout History</a>
+                        </li>
 
                     <li>
                         <form action="{{ route('logout')}}" method="POST">

@@ -30,18 +30,22 @@
         @error('name')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
+
     </div>
 
     <div class="form-group">
         <label for="phone">Phone Number</label>
-        <input type="tel" class="form-control @error('phone') is-invalid @enderror"
-        name="phone" value="{{old('phone')}}"
-        placeholder="Enter your phone number" required>
+        <input type="text" maxlength="11" pattern="01[0-9]{8,9}" title="Please enter a valid Malaysian phone number. eg: 01x-xxx xxxx"
+            class="form-control @error('phone') is-invalid @enderror"
+            name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number" required />
 
         @error('phone')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
+
+        <small class="text-muted">[ eg: 01x-xxx xxxx ]</small>
     </div>
+
 
     <div class="form-group">
         <label for="email">Email Address</label>
@@ -52,6 +56,8 @@
         @error('email')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
+
+        <small class="text-muted">[ eg: example@gmail.com ]</small>
     </div>
 
     <div class="form-group">

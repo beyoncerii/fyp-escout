@@ -19,7 +19,7 @@
 
         <div class="button">
 
-                <a class="btn btn-primary mt-2 mb-2"  href="{{ route('listathletes')}} " style="text-decoration: none; color:white"> Our Athletes </a>
+                <a class="btn btn-success mt-2 mb-2"  href="{{ route('listathletes')}} " style="text-decoration: none; color:white"> Our Athletes </a>
 
         </div>
 

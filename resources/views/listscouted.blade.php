@@ -23,7 +23,7 @@
                             <td style="text-align: center;">{{ $athlete->name }}</td>
                             <td style="text-align: center;">{{ $athlete->scouts->first()->created_at }}</td>
                             <td style="text-align: center;">
-                                <a href="{{ route('athleteprofile2', $athlete->id) }}">Click Here</a>
+                                <a href="{{ route('demo', $athlete->id) }}">Click Here</a>
                             </td>
                         </tr>
                     @endforeach

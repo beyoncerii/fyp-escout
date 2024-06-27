@@ -123,8 +123,6 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
  */
 
 
-// Route::get('/scout', [ScoutController::class, 'showForm'])->name('scout.form');
-// Route::post('/scout', [ScoutController::class, 'sendSMS'])->name('scout.send');
 
 Route::get('/listscouted', [ScoutController::class, 'listscouted'])
 ->name('listscouted')
@@ -153,31 +151,16 @@ Route::get('dashboard', function(){
     return view('dashboard');
 })->name('dashboard');
 
-Route::group(['middleware' => ['checkrole']], function () {
-    Route::get('athleteprofile2/{id}', [ProfileController::class, 'athleteprofileAdmin'])
-->name('athleteprofile2');
-});
-
-// Route::get('athleteprofile2/{id}', [ProfileController::class, 'athleteprofileAdmin'])
-// ->name('athleteprofile2')
-// ->middleware('auth:staff');
 
 //--------------------------------------------------------------------
 
-Route::get('/demo/{id}', [ProfileController::class, 'athleteprofiledemo'])
+
+Route::group(['middleware' => ['checkrole']], function () {
+    Route::get('demo/{id}', [ProfileController::class, 'athleteprofiledemo'])
 ->name('demo');
+});
 
 Route::post('/coach/scout', [ScoutController::class, 'store'])
 ->name('coach-scout');
 
-/**
- * EMAIL ROUTES
- */
 
-    // Route::get('/send-email', [ProfileController::class, 'acceptathlete']);
-
-    // Route::get('/mail/athletereject', function(){
-    //     return AthleteRejected();
-    // });
-
- //--------------------------------------------------------------------

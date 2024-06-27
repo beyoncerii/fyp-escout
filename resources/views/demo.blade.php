@@ -98,32 +98,32 @@
                                 @endauth
 
                                 @auth('athlete')
-        @if (auth('athlete')->user()->id == $athlete->id)
-            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">Your Status:</h6>
-                <span class="text-secondary">{{ $athlete->status }}</span>
-            </li>
-        @endif
-    @endauth
-</ul>
+                                    @if (auth('athlete')->user()->id == $athlete->id)
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                            <h6 class="mb-0">Your Status:</h6>
+                                            <span class="text-secondary">{{ $athlete->status }}</span>
+                                        </li>
+                                    @endif
+                                @endauth
+                            </ul>
 
-@auth('athlete')
-    @if (auth('athlete')->user()->id == $athlete->id)
-        <div class="d-flex justify-content-center mt-3">
+                            @auth('athlete')
+                                @if (auth('athlete')->user()->id == $athlete->id)
+                                    <div class="d-flex justify-content-center mt-3">
 
-            @if (auth('athlete')->user()->id == $athlete->id)
-        <div class="d-flex justify-content-center mt-3">
-            @if ($athlete->status == 'Rejected')
-                <a href="{{ route('createathlete') }}" class="btn btn-danger">Recreate Athlete Profile</a>
-            @else
-                <a href="{{ route('editathlete') }}" class="btn btn-success">Edit Profile</a>
-            @endif
-        </div>
-    @endif
+                                        @if (auth('athlete')->user()->id == $athlete->id)
+                                    <div class="d-flex justify-content-center mt-3">
+                                        @if ($athlete->status == 'Rejected')
+                                            <a href="{{ route('createathlete') }}" class="btn btn-danger">Recreate Athlete Profile</a>
+                                        @else
+                                            <a href="{{ route('editathlete') }}" class="btn btn-success">Edit Profile</a>
+                                        @endif
+                                    </div>
+                                @endif
 
-        </div>
-    @endif
-@endauth
+                                    </div>
+                                @endif
+                            @endauth
 
                             @auth('staff')
                                 @if (auth('staff')->user() && auth('staff')->user()->role == 'coach')
@@ -167,7 +167,6 @@
 						<div class="card-body">
                             <h5 class="text-center mb-3">{{$athlete->name}}'s' Information</h5>
 
-							@foreach ($sports as $sport)
                             <div class="row mb-1 align-items-center">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Sports:</h6>
@@ -175,12 +174,14 @@
                                 <div class="col-sm-9">
                                     <div class="border p-2 rounded">
                                         <ul class="list-unstyled mb-0">
-                                            <li>{{ $sport->name }}</li>
+                                            @foreach ($sports as $sport)
+                                                <li>{{ $sport->name }}</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+
 
                             <div class="row mb-1 align-items-center">
                                 <div class="col-sm-3">
@@ -188,7 +189,7 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="border p-2 rounded">
-                                        <label class="form-control-plaintext mb-0">{{ $athlete->position }}</label>
+                                        {!! nl2br(e($athlete->position)) !!}
                                     </div>
                                 </div>
                             </div>
@@ -210,10 +211,11 @@
                                 </div>
                                 <div class="col-sm-9">
                                     <div class="border p-2 rounded">
-                                        <label class="form-control-plaintext mb-0">{{ $athlete->achievement }}</label>
+                                        {!! nl2br(e($athlete->achievement)) !!}
                                     </div>
                                 </div>
                             </div>
+
 
                             <div class="row mb-1 align-items-center">
                                 <div class="col-sm-3">

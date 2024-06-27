@@ -25,7 +25,7 @@
                     <td style="text-align: center;">{{ $athlete->id }}</td>
                     <td style="text-align: center;">{{ $athlete->name }}</td>
                     <td style="text-align: center;">{{ $athlete->created_at }}</td>
-                    <td style="text-align: center;"><a href="{{ route('athleteprofile2', $athlete->id) }}">Click Here</a></td>
+                    <td style="text-align: center;"><a href="{{ route('demo', $athlete->id) }}">Click Here</a></td>
 
                     @if ($athlete->status == 'Approved' || $athlete->status == 'Rejected')
                         <td style="text-align: center;">{{ $athlete->status }}</td>

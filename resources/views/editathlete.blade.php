@@ -28,7 +28,7 @@
 
                 <div class="mb-3">
                     <label for="position" class="form-label">Position:</label>
-                    <input type="text" id="position" name="position" value="{{ Auth::user()->position }}">
+                    <textarea id="position" name="position" >{{ Auth::user()->position }}</textarea>
                 </div>
 
                 <div class="mb-3">

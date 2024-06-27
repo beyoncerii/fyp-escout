@@ -16,7 +16,7 @@ h2 {
   .container-sm {
     margin-top: 100px;
     min-height: 50vh; /*Center vertically on the page */
-    background-color: rgba(227, 237, 247, 0.548);/*Add a semi-transparent white background to make the form more readable */
+    background-color: white;/*Add a semi-transparent white background to make the form more readable */
     padding: 20px;
   }
 
