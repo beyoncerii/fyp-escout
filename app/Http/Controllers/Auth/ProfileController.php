@@ -344,7 +344,23 @@ class ProfileController extends Controller
             return redirect()->route('listathletes')->with('success', 'Athlete deleted successfully');
         }
 
+        // Show the form to edit the staff profile
+    public function editstaff()
+    {
+        $staff = Auth::guard('staff')->user();
+        return view('editstaff', compact('staff'));
+    }
 
 
+    public function updateStaff(Request $request, $id){
+
+        Auth::guard('staff')->user()->name = $request->name;
+        Auth::guard('staff')->user()->email = $request->email;
+        Auth::guard('staff')->user()->phone = $request->phone;
+
+        Auth::guard('staff')->user()->save();
+
+        return back()->with('success', 'Profile successfully updated!');
+    }
 
 }

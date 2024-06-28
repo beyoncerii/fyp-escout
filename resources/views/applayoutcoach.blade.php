@@ -39,6 +39,10 @@
                             <a class="nav-link " href="{{ route('listscouted')}}">Scout History</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link " href="{{ route ('editstaff')}}">My Account</a>
+                          </li>
+
                         <li>
                             <form action="{{ route('logout')}}" method="POST">
                                 @csrf

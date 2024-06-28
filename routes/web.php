@@ -92,6 +92,7 @@ Route::post('/editprofile/{id}', [ProfileController::class, 'updateprofile'])
  ->name('editprofile-store')
  ->middleware('auth:athlete');
 
+
 //--------------------------------------------------------------------
 
 /**
@@ -128,10 +129,22 @@ Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
  */
 
 
-
 Route::get('/listscouted', [ScoutController::class, 'listscouted'])
 ->name('listscouted')
 ->middleware('auth:staff');
+
+Route::post('/coach/scout', [ScoutController::class, 'store'])
+->name('coach-scout');
+
+Route::get('editstaff', [ProfileController::class, 'editstaff'])
+->name('editstaff')
+->middleware('auth:staff');
+
+Route::post('/staff/update/{id}', [ProfileController::class, 'updateStaff'])
+->name('editprofile-store')
+->middleware('auth:staff');
+
+
 
 
 //--------------------------------------------------------------------
@@ -167,19 +180,6 @@ Route::group(['middleware' => ['checkrole']], function () {
 ->name('demo');
 });
 
-Route::post('/coach/scout', [ScoutController::class, 'store'])
-->name('coach-scout');
-
-
-
-Route::group(['middleware' => ['checkrole']], function () {
-    Route::get('demo/{id}', [ProfileController::class, 'athleteprofiledemo'])
-->name('demo');
-});
-
-Route::get('createathlete', [ProfileController::class, 'createathlete'])
-->name('createathlete')
-->middleware('auth:athlete');
 
 Route::get('test', [ProfileController::class, 'testCreate'])
 ->name('test')
