@@ -7,14 +7,16 @@
     <div class="container-sm">
 
         <div style="margin-top: 50px">
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
                   <tr>
                     <th scope="col" style="text-align: center;">Athlete ID</th>
                     <th scope="col" style="text-align: center;">Athlete Name</th>
                     <th scope="col" style="text-align: center;">Request Date</th>
                     <th scope="col" style="text-align: center;">Profile Link</th>
-                    <th scope="col" style="text-align: center;">Action</th>
+                    <th scope="col" style="text-align: center;">Status</th>
+                    <th scope="col" style="text-align: center;">Accept</th>
+                    <th scope="col" style="text-align: center;">Reject</th>
                   </tr>
                 </thead>
 
@@ -25,24 +27,35 @@
                     <td style="text-align: center;">{{ $athlete->id }}</td>
                     <td style="text-align: center;">{{ $athlete->name }}</td>
                     <td style="text-align: center;">{{ $athlete->created_at }}</td>
-                    <td style="text-align: center;"><a href="{{ route('demo', $athlete->id) }}">Click Here</a></td>
+                    <td style="text-align: center;">
+                        <a href="{{ route('demo', $athlete->id) }}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-eye"></i> View Profile
+                        </a>
+                    </td>
+                    <td style="text-align: center;">{{ $athlete->status }}</td>
 
-                    @if ($athlete->status == 'Approved' || $athlete->status == 'Rejected')
-                        <td style="text-align: center;">{{ $athlete->status }}</td>
-                    @else
-                        <td style="text-align: center;">
-                            <form action="{{ route('acceptathlete', $athlete->id) }}" method="POST" style="display: inline-block;">
+                    <td style="text-align: center;">
+                        @if ($athlete->status == 'Pending')
+                            <form action="{{ route('acceptathlete', $athlete->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-success">Accept</button>
+                                <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check-circle"></i> Accept</button>
                             </form>
+                        @endif
+                    </td>
 
-                            <form action="{{ route('rejectathlete', $athlete->id) }}" method="POST" style="display: inline-block;">
+                    <td style="text-align: center;">
+                        @if ($athlete->status == 'Pending')
+                            <form action="{{ route('rejectathlete', $athlete->id) }}" method="POST">
                                 @csrf
-                                <input type="text" name="remarks" placeholder="Enter remarks" required>
-                                <button type="submit" class="btn btn-danger">Reject</button>
+                                <div class="input-group">
+                                    <input type="text" name="remarks" class="form-control form-control-sm" placeholder="Enter remarks" required>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-times-circle"></i> Reject</button>
+                                    </div>
+                                </div>
                             </form>
-                        </td>
-                    @endif
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
 

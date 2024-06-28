@@ -31,6 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link " href="{{url ('homeathlete')}}">Home</a>
                       </li>
+
                       <li class="nav-item">
                         <a class="nav-link " href="{{ route('listathletes')}}">Our Athletes</a>
                     </li>
@@ -48,8 +49,10 @@
                         <button type="submit" class="btn nav-link">Logout</button>
                         </form>
                     </li>
+
                 </ul>
               </div>
+
             </div>
           </nav>
 
@@ -58,23 +61,27 @@
         @guest('athlete')
         <nav class="navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
-              <a class="navbar-brand" href="">
-
+              <a class="navbar-brand" href="{{ route('home')}}">
                 <strong> Escout</strong>
               </a>
+
               <div class="collapseNavBar navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link " href="{{ route('home')}}">Home</a>
-                      </li>
-                      <li class="nav-item">
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link " href="{{ route('listathletes')}}">Our Athletes</a>
-                      </li>
-                      <li class="nav-item">
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link " href="{{url ('login')}}">Login</a>
                     </li>
+
                 </ul>
               </div>
+
             </div>
           </nav>
         @endguest
@@ -86,19 +93,19 @@
 
 </main>
 
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/667a45929d7f358570d308e7/1i16pvhd9';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
-    <!--End of Tawk.to Script-->
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/667a45929d7f358570d308e7/1i16pvhd9';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+            })();
+            </script>
+            <!--End of Tawk.to Script-->
 
 </body>
 

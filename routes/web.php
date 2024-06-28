@@ -152,6 +152,8 @@ Route::post('/rejectathlete/{id}', [ProfileController::class, 'rejectAthlete'])
 ->name('rejectathlete')
 ->middleware('auth:staff');
 
+Route::delete('/athlete/{id}', [ProfileController::class, 'destroy'])->name('delete-athlete');
+
 Route::get('dashboard', function(){
     return view('dashboard');
 })->name('dashboard');
@@ -179,10 +181,10 @@ Route::get('createathlete', [ProfileController::class, 'createathlete'])
 ->name('createathlete')
 ->middleware('auth:athlete');
 
+Route::get('test', [ProfileController::class, 'testCreate'])
+->name('test')
+->middleware('auth:athlete');
 
-Route::get('test', function(){
-    return view('test');
-})->name('test');
 
 Route::get('test2', function(){
     return view('test2');

@@ -1,37 +1,139 @@
-
-  /* form  */
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
+/* profile.css */
+.container-sm {
+    margin-top: 50px;
 }
 
 h2 {
     text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.alert {
     margin-bottom: 20px;
 }
 
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+}
+
+/* Custom CSS for range inputs */
+.custom-range-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.custom-range {
+    width: 100%;
+    height: 2rem;
+    appearance: none;
+    margin: 10px 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.custom-range-container {
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed for spacing */
+}
 
 
-  .container-sm {
-    margin-top: 100px;
-    min-height: 50vh; /*Center vertically on the page */
-    background-color: white;/*Add a semi-transparent white background to make the form more readable */
-    padding: 20px;
-  }
+.custom-range::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+}
 
+.custom-range::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    border: 0;
+    border-radius: 50%;
+    appearance: none;
+    cursor: pointer;
+    margin-top: -10px;
+    z-index: 1;
+    position: relative;
+}
 
-  /* Smaller container */
-  @media (min-width: 768px) {
-    .container-sm {
-      max-width: 600px; /* Adjust the maximum width as needed */
-    }
-  }
+.custom-range::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+}
 
+.custom-range::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
 
-  .button {
-    display: block;
-    margin: 0 auto;
-  }
+.custom-range::-ms-track {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+}
 
+.custom-range::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background: #007bff;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
 
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center vertically */
+    margin-top: 5px;
+}
+
+.range-labels span {
+    font-size: 12px;
+    color: #666;
+}
+
+/* Optional: Adjust output style */
+output {
+display: block;
+text-align: center;
+font-weight: bold;
+color: #007bff;
+position: absolute;
+bottom: -30px; /* Adjusted to position below the range input */
+left: 0;
+right: 0;
+}
+
+/* Optional: Adjust form-check styles for spacing */
+.form-check {
+    margin-bottom: 10px;
+}

@@ -315,24 +315,36 @@ class ProfileController extends Controller
 
         //create athlete profile
         public function testCreate()
-{
-    $athlete = Auth::guard('athlete')->user();
+        {
+            $athlete = Auth::guard('athlete')->user();
 
-    // Check if the user has already requested to create an athlete profile and has been approved or is pending
-    if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
-        return redirect()->route('demo', ['id' => $athlete->id])->with('error', 'You already made your own athlete profile!');
-    }
+            // Check if the user has already requested to create an athlete profile and has been approved or is pending
+            if ($athlete->status == 'Pending' || $athlete->status == 'Approved') {
+                return redirect()->route('demo', ['id' => $athlete->id])->with('error', 'You already made your own athlete profile!');
+            }
 
-    // If the user has been rejected, allow them to create a new profile
-    if ($athlete->status == 'Rejected') {
-        // Clear previous sports associations and skills
-        $athlete->sports()->detach();
-        $athlete->skills()->delete();
-    }
+            // If the user has been rejected, allow them to create a new profile
+            if ($athlete->status == 'Rejected') {
+                // Clear previous sports associations and skills
+                $athlete->sports()->detach();
+                $athlete->skills()->delete();
+            }
 
-    $levels = Level::all();
-    $sports = Sport::all();
-    return view('test', compact('athlete', 'levels', 'sports')); // Pass $athlete to the view
-}
+            $levels = Level::all();
+            $sports = Sport::all();
+            return view('test', compact('athlete', 'levels', 'sports')); // Pass $athlete to the view
+        }
+
+        //delete athlete profile
+        public function destroy($id)
+        {
+            $athlete = Athlete::findOrFail($id);
+            $athlete->delete();
+
+            return redirect()->route('listathletes')->with('success', 'Athlete deleted successfully');
+        }
+
+
+
 
 }

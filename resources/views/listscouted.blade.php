@@ -2,13 +2,13 @@
 
 @section('content')
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <div class="container-sm">
 
         <div style="margin-top: 50px">
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col" style="text-align: center;">Athlete ID</th>
                         <th scope="col" style="text-align: center;">Athlete Name</th>
@@ -23,7 +23,9 @@
                             <td style="text-align: center;">{{ $athlete->name }}</td>
                             <td style="text-align: center;">{{ $athlete->scouts->first()->created_at }}</td>
                             <td style="text-align: center;">
-                                <a href="{{ route('demo', $athlete->id) }}">Click Here</a>
+                                <a href="{{ route('demo', $athlete->id) }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i> View Profile
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -32,6 +34,5 @@
         </div>
 
     </div>
-
 
 @endsection
