@@ -7,11 +7,7 @@
 <div class="container-sm">
     <div>
 
-        @if (session('success'))
-        <p class="alert alert-success">{{ session('success') }}</p>
-        @endif
-
-        <form action="{{ route('editprofile-store', Auth::user()->id) }}" method="POST">
+        <form action="{{ route('editprofileathlete-store', Auth::user()->id) }}" method="POST">
             @csrf
 
             @if ($errors->any())
@@ -19,6 +15,11 @@
             @endif
 
             <div class="box right-box p-4 col-sm-6 mx-auto" style="background-color: rgba(227, 237, 247, 0.548);">
+
+                @if (session('success'))
+                <p class="alert alert-success">{{ session('success') }}</p>
+                @endif
+
                 <h2 class="text-center">Edit your account details</h2>
 
                 <div class="row mb-3 justify-content-center">

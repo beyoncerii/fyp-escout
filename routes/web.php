@@ -89,7 +89,7 @@ Route::get('listathletes', [ProfileController::class, 'viewAthletes'])
  ->middleware('auth:athlete');
 
 Route::post('/editprofile/{id}', [ProfileController::class, 'updateprofile'])
- ->name('editprofile-store')
+ ->name('editprofileathlete-store')
  ->middleware('auth:athlete');
 
 
@@ -115,7 +115,7 @@ Route::get('editathlete', [ProfileController::class, 'editathlete'])
 ->name('editathlete')
 ->middleware('auth:athlete');
 
-Route::post('/updateathlete/{id}', [ProfileController::class, 'updateathlete'])
+Route::post('/athlete/update/{id}', [ProfileController::class, 'updateathlete'])
 ->name('update-athlete')
 ->middleware('auth:athlete');
 

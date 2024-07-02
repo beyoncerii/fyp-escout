@@ -18,12 +18,17 @@ class ScoutController extends Controller
     }
 
     public function listScouted() {
-        // Retrieve athletes who have been scouted
-        $athletes = Athlete::whereHas('scouts')->get();
+        $coachId = Auth::guard('staff')->user()->id;
+
+        // Retrieve athletes scouted by the authenticated coach
+        $athletes = Athlete::whereHas('scouts', function ($query) use ($coachId) {
+            $query->where('coach_id', $coachId);
+        })->get();
 
         return view('listscouted', [
             'athletes' => $athletes
         ]);
     }
+
 
 }

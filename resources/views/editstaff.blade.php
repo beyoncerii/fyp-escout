@@ -8,7 +8,6 @@
     <div>
 
 
-
         <form action="{{ route('editprofile-store', Auth::user()->id) }}" method="POST">
             @csrf
 

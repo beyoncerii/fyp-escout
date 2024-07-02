@@ -60,6 +60,13 @@
 
     <div class="container">
         <div class="main-body">
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card">
@@ -139,7 +146,7 @@
 
                                         <div class="d-flex justify-content-center mt-3">
                                             @if ($athlete->status == 'Rejected')
-                                                <a href="{{ route('createathlete') }}" class="btn btn-danger">Recreate Athlete Profile</a>
+                                                <a href="{{ route('test') }}" class="btn btn-danger">Recreate Athlete Profile</a>
                                             @else
                                                 <a href="{{ route('editathlete') }}" class="btn btn-success">Edit Profile</a>
                                             @endif

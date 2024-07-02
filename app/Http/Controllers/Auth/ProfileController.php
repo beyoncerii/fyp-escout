@@ -292,13 +292,21 @@ class ProfileController extends Controller
         public function athleteprofiledemo($id)
         {
             $athlete = Athlete::find($id);
-            $level_id = $athlete->level_id;
-            $level = Level::find($level_id);
+
+            // Check if the athlete's profile is complete
+            if (!$athlete || !$athlete->achievement) {
+                // Redirect to the create athlete profile page with an error message
+                return redirect()->route('test')
+                                ->with('error', 'Please create your athlete profile first.');
+            }
+
+            $level = $athlete->level; // Use relationship instead of fetching level separately
             $sports = $athlete->sports;
             $skills = $athlete->skills;
 
             return view('demo', compact('athlete', 'level', 'sports', 'skills'));
         }
+
 
         //test send email
         public function sendEmail()
