@@ -99,6 +99,9 @@ class ProfileController extends Controller
             'level' => 'required|integer|exists:levels,id',
             'achievement' => 'nullable|string',
             'sports' => 'required|array',
+            'stuid' => 'nullable|integer|unique:athletes,stuid',
+            'program' => 'nullable|string',
+            'semester' => 'nullable|integer',
             'sports.*' => 'integer|exists:sports,id',
             'strength' => 'required|integer|min:1|max:5',
             'speed' => 'required|integer|min:1|max:5',
@@ -114,6 +117,9 @@ class ProfileController extends Controller
         $athlete->position = $request->position;
         $athlete->level_id = $request->level;
         $athlete->achievement = $request->achievement;
+        $athlete->stuid = $request->stuid;
+        $athlete->program = $request->program;
+        $athlete->semester = $request->semester;
 
         // Handle the image upload if present
         if ($request->hasFile('image')) {
@@ -157,6 +163,9 @@ class ProfileController extends Controller
             'position' => 'required|string|max:255',
             'level' => 'required|integer|exists:levels,id',
             'achievement' => 'nullable|string',
+            'stuid' => 'nullable|integer|unique:athletes,stuid',
+            'program' => 'nullable|string',
+            'semester' => 'nullable|integer',
             'strength' => 'required|integer|min:1|max:5',
             'speed' => 'required|integer|min:1|max:5',
             'endurance' => 'required|integer|min:1|max:5',
@@ -171,6 +180,9 @@ class ProfileController extends Controller
         $athlete->position = $request->position;
         $athlete->level_id = $request->level;
         $athlete->achievement = $request->achievement;
+        $athlete->stuid = $request->stuid;
+        $athlete->program = $request->program;
+        $athlete->semester = $request->semester;
 
         // Handle the image upload if present
         if ($request->hasFile('image')) {

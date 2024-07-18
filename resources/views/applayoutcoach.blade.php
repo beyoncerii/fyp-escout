@@ -35,6 +35,10 @@
                             <a class="nav-link " href="{{ route ('listathletes')}}">View Athletes</a>
                           </li>
 
+                          <li class="nav-item">
+                            <a class="nav-link " href="{{ route ('createevent')}}">Create Event</a>
+                          </li>
+
                         <li class="nav-item">
                             <a class="nav-link " href="{{ route('listscouted')}}">Scout History</a>
                         </li>

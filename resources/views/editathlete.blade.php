@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="weight"><strong>Weight</strong></label>
-                                    <input type="double" step="any" id="weight" name="weight" class="form-control" value="{{ Auth::user()->weight }}">
+                                    <input type="number" step="any" id="weight" name="weight" class="form-control" value="{{ Auth::user()->weight }}">
                                 </div>
 
                                 <div class="form-group">
@@ -96,6 +96,55 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+
+                                    <div class="form-group">
+                                        <label for="stuid"><strong>Student ID</strong></label>
+                                        <input type="number" step="any" id="stuid" name="stuid" class="form-control" value="{{ Auth::user()->stuid }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="strength"><strong>Programme:</strong></label>
+                                        <select class="form-select" aria-label="program" name="program">
+                                            <option selected value="{{ Auth::user()->program }}">{{ Auth::user()->program }}</option>
+                                            <option value="C110 - Diploma in Computer Science" {{ Auth::user()->program == 'C110 - Diploma in Computer Science' ? 'hidden' : '' }}>
+                                                C110 - Diploma in Computer Science</option>
+                                            <option value="CS230 - Bachelor of Computer Science (Hons.)" {{ Auth::user()->program == 'CS230 - Bachelor of Computer Science (Hons.)' ? 'hidden' : '' }}>
+                                                CS230 - Bachelor of Computer Science (Hons.)</option>
+                                            <option value="CS255 - Bachelor of Computer Science (Hons.) Data Communication and Networking" {{ Auth::user()->program == 'CS255 - Bachelor of Computer Science (Hons.) Data Communication and Networking' ? 'hidden' : '' }}>
+                                                CS255 - Bachelor of Computer Science (Hons.) Data Communication and Networking</option>
+                                            <option value="CS253 - Bachelor of Computer Science (Hons.) Multimedia Computing" {{ Auth::user()->program == 'CS253 - Bachelor of Computer Science (Hons.) Multimedia Computing' ? 'hidden' : '' }}>
+                                                CS253 - Bachelor of Computer Science (Hons.) Multimedia Computing</option>
+                                            <option value="CS251 - Bachelor of Computer Science (Hons.) Netcentric Computing" {{ Auth::user()->program == 'HCS251 - Bachelor of Computer Science (Hons.) Netcentric Computing' ? 'hidden' : '' }}>
+                                                CS251 - Bachelor of Computer Science (Hons.) Netcentric Computing</option>
+                                            <option value="CS266 - Bachelor of Information Technology (Hons.) Information Systems Engineering" {{ Auth::user()->program == 'CS266 - Bachelor of Information Technology (Hons.) Information Systems Engineering' ? 'hidden' : '' }}>
+                                                CS266 - Bachelor of Information Technology (Hons.) Information Systems Engineering</option>
+                                            <option value="AT110 - Diploma in Planting Industry Management" {{ Auth::user()->program == 'AT110 - Diploma in Planting Industry Management' ? 'hidden' : '' }}>
+                                                AT110 - Diploma in Planting Industry Management</option>
+                                            <option value="AT220 - Bachelor of Science (Hons) Plantation Technology and Management" {{ Auth::user()->program == 'AT220 - Bachelor of Science (Hons) Plantation Technology and Management' ? 'hidden' : '' }}>
+                                                AT220 - Bachelor of Science (Hons) Plantation Technology and Management</option>
+                                            <option value="AT222 - Bachelor of Science (Hons) Agronomy" {{ Auth::user()->program == 'AT222 - Bachelor of Science (Hons) Agronomy' ? 'hidden' : '' }}>
+                                                AT222 - Bachelor of Science (Hons) Agronomy</option>
+                                            <option value="AT223 - Bachelor of Science (Hons) Agribusiness" {{ Auth::user()->program == 'AT223 - Bachelor of Science (Hons) Agribusiness' ? 'hidden' : '' }}>
+                                                AT223 - Bachelor of Science (Hons) Agribusiness</option>
+                                            <option value="AT226 - Bachelor of Science (Hons) in Agrotechnology (Plant Biotechnology)" {{ Auth::user()->program == 'AT226 - Bachelor of Science (Hons) in Agrotechnology (Plant Biotechnology)' ? 'hidden' : '' }}>
+                                                AT226 - Bachelor of Science (Hons) in Agrotechnology (Plant Biotechnology)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="semester"><strong>Semester</strong></label>
+                                        <select class="form-select" aria-label="semester" name="semester" >
+                                            <option selected value="{{ Auth::user()->semester }}">{{ Auth::user()->semester }}</option>
+                                            <option value="1" {{ Auth::user()->semester == '1' ? 'hidden' : ''}}>1</option>
+                                            <option value="2" {{ Auth::user()->semester == '2' ? 'hidden' : ''}}>2</option>
+                                            <option value="3" {{ Auth::user()->semester == '3' ? 'hidden' : ''}}>3</option>
+                                            <option value="4" {{ Auth::user()->semester == '4' ? 'hidden' : ''}}>4</option>
+                                            <option value="5" {{ Auth::user()->semester == '5' ? 'hidden' : ''}}>5</option>
+                                            <option value="6" {{ Auth::user()->semester == '6' ? 'hidden' : ''}}>6</option>
+                                            <option value="7" {{ Auth::user()->semester == '7' ? 'hidden' : ''}}>7</option>
+                                            <option value="8" {{ Auth::user()->semester == '8' ? 'hidden' : ''}}>8</option>
+                                        </select>
+                                    </div>
 
                                     <!-- Strength -->
                                     <div class="custom-range-container" style="text-align: center;">

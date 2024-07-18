@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="weight"><strong>Weight</strong></label>
-                                    <input type="double" step="any" id="weight" name="weight"  class="form-control"  value="{{ old('weight') }}" >
+                                    <input type="number" step="any" id="weight" name="weight"  class="form-control"  value="{{ old('weight') }}" >
                                 </div>
 
                                 <div class="form-group">
@@ -97,6 +97,56 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
+
+                                    <div class="form-group">
+                                        <label for="stuid"><strong>Student ID</strong></label>
+                                        <input type="number" id="stuid" name="stuid" class="form-control" placeholder="Enter your stuid"></input>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="strength"><strong>Programme:</strong></label>
+                                        <select class="form-select" aria-label="program" name="program" >
+                                            <option selected >Choose your programme</option>
+
+                                            <option value="C110 - Diploma in Computer Science">
+                                                C110 - Diploma in Computer Science</option>
+                                            <option value="CS230 - Bachelor of Computer Science (Hons.)">
+                                                CS230 - Bachelor of Computer Science (Hons.)</option>
+                                            <option value="CS255 - Bachelor of Computer Science (Hons.) Data Communication and Networking">
+                                                CS255 - Bachelor of Computer Science (Hons.) Data Communication and Networking</option>
+                                            <option value="CS253 - Bachelor of Computer Science (Hons.) Multimedia Computing">
+                                                CS253 - Bachelor of Computer Science (Hons.) Multimedia Computing</option>
+                                            <option value="CS251 - Bachelor of Computer Science (Hons.) Netcentric Computing">
+                                                CS251 - Bachelor of Computer Science (Hons.) Netcentric Computing</option>
+                                            <option value="CS266 - Bachelor of Information Technology (Hons.) Information Systems Engineering">
+                                                CS266 - Bachelor of Information Technology (Hons.) Information Systems Engineering</option>
+                                            <option value="AT110 - Diploma in Planting Industry Management">
+                                                AT110 - Diploma in Planting Industry Management</option>
+                                            <option value="AT220 - Bachelor of Science (Hons) Plantation Technology and Management">
+                                                AT220 - Bachelor of Science (Hons) Plantation Technology and Management</option>
+                                            <option value="AT222 - Bachelor of Science (Hons) Agronomy">
+                                                AT222 - Bachelor of Science (Hons) Agronomy</option>
+                                            <option value="AT223 - Bachelor of Science (Hons) Agribusiness">
+                                                AT223 - Bachelor of Science (Hons) Agribusiness</option>
+                                            <option value="AT226 - Bachelor of Science (Hons) in Agrotechnology (Plant Biotechnology)">
+                                                AT226 - Bachelor of Science (Hons) in Agrotechnology (Plant Biotechnology)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="semester"><strong>Semester</strong></label>
+                                        <select class="form-select" aria-label="semester" name="semester" >
+                                            <option selected >Select current semester</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                        </select>
+                                    </div>
 
                                     <div class="custom-range-container" style="text-align: center">
                                         <label for="strength"><strong>Select your strength level:</strong></label>

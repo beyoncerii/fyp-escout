@@ -4,6 +4,7 @@ use App\Mail\AthleteApproved;
 use App\Mail\AthleteRejected;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScoutController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SmsTwilioController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -190,3 +191,39 @@ Route::get('test2', function(){
     return view('test2');
 })->name('test2');
 
+Route::get('/calendar', function () {
+    return view('calendar');
+})->name('calendar');
+
+Route::get('/createevent', function () {
+    return view('createevent');
+})->name('createevent');
+
+//--------------------------------------------------------------------
+
+
+/**
+ * SCHEDULE ROUTES
+ */
+
+ Route::get('schedule/create', [ScheduleController::class, 'create'])
+ ->name('schedule.create')
+ ->middleware('auth:athlete');
+
+ Route::post('schedule', [ScheduleController::class, 'store'])
+ ->name('schedule.store')
+ ->middleware('auth:athlete');
+
+ Route::get('viewschedule', [ScheduleController::class, 'show'])
+ ->name('schedule.show')
+ ->middleware('auth:athlete');
+
+
+    Route::get('athlete/{id}/viewschedule', [ScheduleController::class, 'showSchedule'])->name('viewschedule');
+
+
+
+
+
+
+//--------------------------------------------------------------------

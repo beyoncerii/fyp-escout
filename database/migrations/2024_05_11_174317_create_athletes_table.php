@@ -25,6 +25,9 @@ return new class extends Migration
             $table->string('achievement')->nullable();
             $table->foreignId('level_id')->nullable();
             $table->string('remarks')->nullable();
+            $table->integer('stuid')->nullable()->unique();
+            $table->string('program')->nullable();
+            $table->integer('semester')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

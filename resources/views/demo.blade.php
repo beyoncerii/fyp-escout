@@ -19,6 +19,8 @@
 
 @section('content')
 
+<title>Athlete Profile</title>
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
@@ -99,6 +101,16 @@
                                 </li>
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6 class="mb-0">Student ID:</h6>
+                                    <span class="text-secondary">{{$athlete->stuid}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <h6 class="mb-0">Current Semester:</h6>
+                                    <span class="text-secondary">{{$athlete->semester}}</span>
+                                </li>
+
+                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                     <h6 class="mb-0">Weight:</h6>
                                     <span class="text-secondary">{{$athlete->weight}}kg</span>
                                 </li>
@@ -156,6 +168,11 @@
 
                                 @auth('staff')
                                     @if (auth('staff')->user() && auth('staff')->user()->role == 'coach')
+
+                                    <div class="form-text text-center text-dark mt-3">
+                                        Schedule? <a href="{{ route('viewschedule', ['id' => $athlete->id]) }}" class="text-dark fw-bold">Show Schedule</a>
+                                    </div>
+
                                         <div class="d-flex justify-content-center mt-3">
                                             <a href="https://api.whatsapp.com/send?phone=60{{ $athlete->phone }}&text=You're scouted!" class="btn btn-success" style="margin-top: 10px;" onclick="return confirmScout();">
                                                 <i class="fab fa-whatsapp"></i> Scout Athlete
@@ -200,6 +217,17 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="text-center mb-3">{{$athlete->name}}'s Information</h5>
+
+                            <div class="row mb-1 align-items-center">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Programme:</h6>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="border p-2 rounded">
+                                        {!! nl2br(e($athlete->program)) !!}
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row mb-1 align-items-center">
                                 <div class="col-sm-3">
