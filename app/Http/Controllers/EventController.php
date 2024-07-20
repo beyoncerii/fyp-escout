@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Athlete;
 use App\Models\Activity;
+use App\Mail\AthleteScouted;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -58,22 +60,57 @@ class EventController extends Controller
 
 
 
-    //Show the form of specic event
     public function view(Event $event)
-    {
-        $availableAthletes = $this->getAvailableAthletes($event->StartDate, $event->EndDate);
+{
+    // Get the number of accepted and pending athletes
+    $athletesCount = Activity::where('event_id', $event->id)
+        ->whereIn('status', ['accepted', 'pending'])
+        ->count();
 
-        return view('filterscout', ['event' => $event, 'availableAthletes' => $availableAthletes]);
-    }
-    // Get athletes that are available for the event
-    private function getAvailableAthletes($startDate, $endDate)
-    {
-        return Athlete::where('status', 'Approved')
-            ->whereDoesntHave('schedules', function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('date', [$startDate, $endDate]);
-            })
-            ->get();
-    }
+    // Calculate remaining capacity
+    $remainingCapacity = $event->capacity - $athletesCount;
+
+    // Check if the event is fully scouted
+    $isScouted = $remainingCapacity <= 0;
+
+    // Fetch available athletes excluding those who are accepted or rejected
+    $availableAthletes = $this->getAvailableAthletes($event->StartDate, $event->EndDate, $event->id);
+
+    // Fetch names of scouted athletes
+    $scoutedAthletes = Activity::where('event_id', $event->id)
+        ->whereIn('status', ['accepted', 'pending'])
+        ->with('athlete') // Ensure the athlete relationship is loaded
+        ->get()
+        ->pluck('athlete.name')
+        ->toArray();
+
+    return view('filterscout', [
+        'event' => $event,
+        'availableAthletes' => $availableAthletes,
+        'remainingCapacity' => $remainingCapacity,
+        'isScouted' => $isScouted,
+        'scoutedAthletes' => $scoutedAthletes
+    ]);
+}
+
+
+
+
+// Get athletes that are available for the event excluding those who are rejected
+private function getAvailableAthletes($startDate, $endDate, $eventId)
+{
+    return Athlete::where('status', 'Approved')
+        ->whereDoesntHave('schedules', function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('date', [$startDate, $endDate]);
+        })
+        ->whereDoesntHave('activities', function ($query) use ($eventId) {
+            $query->where('event_id', $eventId)
+                ->whereIn('status', ['accepted', 'rejected']); // Use 'whereIn' to exclude both statuses
+        })
+        ->get();
+}
+
+
 
 
 
@@ -118,32 +155,47 @@ class EventController extends Controller
 
     public function pickAthletes(Request $request, Event $event)
 {
-    $request->validate([
-        'athletes' => 'required|array|max:' . $event->capacity,
-        'athletes.*' => 'exists:athletes,id',
-    ]);
+    // Check if the number of athletes with status 'pending' or 'accepted' has reached the event's capacity
+    $pickedAthletesCount = Activity::where('event_id', $event->id)
+                                   ->whereIn('status', ['pending', 'accepted'])
+                                   ->count();
 
-
-    // Check if the number of picked athletes exceeds the event's capacity
-    if (count($request->athletes) > $event->capacity) {
+    if ($pickedAthletesCount >= $event->capacity) {
         return back()->withErrors([
-            'athletes' => 'You cannot pick more athletes than the event capacity.',
+            'athletes' => 'You have already picked athletes for this event.',
         ])->withInput();
     }
 
-    // Clear previous selections for the event
-    Activity::where('event_id', $event->id)->delete();
+    $request->validate([
+        'athletes' => 'required|array|max:' . ($event->capacity - $pickedAthletesCount),
+        'athletes.*' => 'exists:athletes,id',
+    ]);
 
-    // Insert new selections
-    foreach ($request->athletes as $athleteId) {
-        Activity::create([
-            'event_id' => $event->id,
-            'athlete_id' => $athleteId,
-            'status' => 'pending', // Adjust status as needed
-        ]);
+    $athleteIds = $request->athletes;
+
+    // Update statuses of existing selections and add new ones
+    foreach ($athleteIds as $athleteId) {
+        Activity::updateOrCreate(
+            [
+                'event_id' => $event->id,
+                'athlete_id' => $athleteId,
+            ],
+            [
+                'status' => 'pending', // Adjust status as needed
+            ]
+        );
     }
 
-    return back()->with('success', 'Athletes have been picked.');
+    // Send email notifications to the picked athletes
+    $athletes = \App\Models\Athlete::whereIn('id', $athleteIds)->get();
+    foreach ($athletes as $athlete) {
+        Mail::to($athlete->email)->send(new AthleteScouted($event));
+    }
+
+    return back()->with('success', 'Athletes have been picked and notified.');
 }
+
+
+
 
 }

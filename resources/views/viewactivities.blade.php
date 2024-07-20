@@ -18,6 +18,9 @@
 @extends($layout)
 
 @section('content')
+
+<title>View Activities</title>
+
 <div class="container">
     <h1>My Activities</h1>
     <table class="table">
@@ -47,14 +50,18 @@
                     </td>
                     <td>
                         @if($activity->status == 'pending')
-                            <form action=" " method="POST" style="display:inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-success">Accept</button>
-                            </form>
-                            <form action=" " method="POST" style="display:inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Reject</button>
-                            </form>
+
+                        <form action="{{ route('activities.accept', $activity->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Accept</button>
+                        </form>
+
+                        <form action="{{ route('activities.reject', $activity->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+
+
                         @endif
                     </td>
                 </tr>

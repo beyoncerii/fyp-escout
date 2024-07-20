@@ -220,23 +220,20 @@ class ProfileController extends Controller
             ]);
         }
 
-        //accept athlete profile request
-        public function acceptAthlete(Request $request, $id)
-        {
-            $athlete = Athlete::find($id);
-            $athlete->status = 'Approved';
-            $athlete->save();
+       // Accept athlete profile request
+public function acceptAthlete(Request $request, $id)
+{
+    // Find the athlete by ID
+    $athlete = Athlete::findOrFail($id);
 
-            // Send email notification
-            $details = [
-                'title' => "EScout: Athlete profile approved!",
-                'body' => "Congratulations! Your athlete profile has been approved. You can now view your profile in Escout!"
-            ];
+    // Update the athlete's status to 'Approved'
+    $athlete->status = 'Approved';
+    $athlete->save();
 
-            Mail::to($athlete->email)->send(new AthleteApproved($details));
+    // Redirect back with a success message
+    return back()->with('success', 'Athlete profile approved successfully.');
+}
 
-            return back()->with('success', 'Email sent successfully');
-        }
 
         //reject athlete profile request
         public function rejectAthlete(Request $request, $id)

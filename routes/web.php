@@ -254,4 +254,10 @@ Route::get('/createevent', function () {
 
 //--------------------------------------------------------------------
 
-Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+ Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+
+ Route::post('/activities/{id}/accept', [ActivityController::class, 'accept'])->name('activities.accept');
+
+ Route::post('/activities/{id}/reject', [ActivityController::class, 'reject'])->name('activities.reject');
+
+

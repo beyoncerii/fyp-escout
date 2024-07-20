@@ -29,56 +29,62 @@
     <div class="box right-box p-4" style="background-color: white; width: 40%; max-height: 90vh; overflow-y: auto; ">
 
         @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <header class="mb-2" style="text-align: center;">Filter and Scout</header>
 
         <p>Event: {{ $event->name }}</p>
         <p>Venue: {{ $event->venue }}</p>
         <p>Capacity: {{ $event->capacity }}</p>
+        <p>Remaining Capacity: {{ $remainingCapacity }}</p>
         <p>Start Date: {{ $event->StartDate }}</p>
-        <p>End Date: {{ $event->EndDate}}</p>
+        <p>End Date: {{ $event->EndDate }}</p>
 
-        <h2>Available Athletes</h2>
-
-        <form action="{{ route('events.pickAthletes', $event->id) }}" method="POST">
-            @csrf
-            @foreach($availableAthletes as $athlete)
-                <div>
-                    <input type="checkbox" name="athletes[]" value="{{ $athlete->id }}">
-                    <label>{{ $athlete->name }}</label>
-                </div>
-            @endforeach
-            <button type="submit">Pick Athletes</button>
-        </form>
-
-        {{-- @if($availableAthletes->isEmpty())
-            <p>No athletes are available for this event.</p>
-        @else
+        @if($isScouted)
+            <p>Athletes successfully scouted for this event:</p>
             <ul>
-                @foreach($availableAthletes as $athlete)
-                    <li>{{ $athlete->name }} - {{ $athlete->email }}</li>
+                @foreach($scoutedAthletes as $athleteName)
+                    <li>{{ $athleteName }}</li>
                 @endforeach
             </ul>
-        @endif --}}
+        @else
+            <h2>Available Athletes</h2>
+
+            @if($availableAthletes->isEmpty())
+                <p>No available athletes for this event. </p>
+            @else
+                <form action="{{ route('events.pickAthletes', $event->id) }}" method="POST">
+                    @csrf
+                    @foreach($availableAthletes as $athlete)
+                        <div>
+                            <input type="checkbox" name="athletes[]" value="{{ $athlete->id }}">
+                            <label>{{ $athlete->name }}</label>
+                        </div>
+                    @endforeach
+                    <button type="submit">Pick Athletes</button>
+                </form>
+            @endif
+        @endif
 
         <a href="{{ route('createevent') }}">Create Another Event</a>
+        <a href="{{ route('viewevent') }}">Back to Event Listing</a>
 
     </div>
 </div>
 
-
 @endsection
+
+
