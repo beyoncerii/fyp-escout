@@ -40,6 +40,10 @@
                         <a class="nav-link " href="{{ route('calendar')}}">Schedule</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ route('activities.index')}}">Activities</a>
+                    </li>
+
                     </li>
                     <li class="nav-item">
                             <a class="nav-link " href="{{route ('demo' , Auth::guard('athlete')->user()->id)}}">My Profile</a>

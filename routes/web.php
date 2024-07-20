@@ -3,7 +3,9 @@
 use App\Mail\AthleteApproved;
 use App\Mail\AthleteRejected;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ScoutController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SmsTwilioController;
 use App\Http\Controllers\Auth\LoginController;
@@ -218,12 +220,38 @@ Route::get('/createevent', function () {
  ->name('schedule.show')
  ->middleware('auth:athlete');
 
+  Route::get('athlete/{id}/viewschedule', [ScheduleController::class, 'showSchedule'])
+  ->name('viewschedule');
 
-    Route::get('athlete/{id}/viewschedule', [ScheduleController::class, 'showSchedule'])->name('viewschedule');
+
+//--------------------------------------------------------------------
 
 
+/**
+ * EVENT ROUTES
+ */
 
+ Route::get('events/create', [EventController::class, 'create'])->name('event.create');
+
+ Route::post('/events', [EventController::class, 'store'])->name('events.store');
+
+ Route::get('viewevent', [EventController::class, 'index'])
+ ->name('viewevent');
+
+ Route::get('events/{id}/editevent', [EventController::class, 'edit'])
+ ->name('events.edit');
+
+ Route::put('events/{id}', [EventController::class, 'update'])
+ ->name('events.update');
+
+ Route::get('viewevents', [EventController::class, 'index'])->name('viewevents');
+
+ Route::get('events/{event}/view', [EventController::class, 'view'])->name('events.view');
+
+ Route::post('/events/{event}/pickAthletes', [EventController::class, 'pickAthletes'])->name('events.pickAthletes');
 
 
 
 //--------------------------------------------------------------------
+
+Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');

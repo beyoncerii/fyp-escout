@@ -19,7 +19,7 @@
 
 @section('content')
 
-<title>Create Event</title>
+<title>Edit Event</title>
 
 <link rel="stylesheet" href="{{ asset('css/test.css') }}" />
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -29,50 +29,49 @@
     <div class="box right-box p-4" style="background-color: rgba(227, 237, 247, 0.548); width: 40%; max-height: 90vh; overflow-y: auto; ">
 
         @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-        <header class="mb-2" style="text-align: center;">Create Event</header>
+        <header class="mb-2" style="text-align: center;">Edit Event</header>
 
-        <form action="{{ route('events.store') }}" method="POST">
+        <form action="{{ route('events.update', $event->id) }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="container">
                 <div class="form-group">
                     <label for="event-name"><strong>Event Name</strong></label>
-                    <input type="text" class="form-control" id="event-name" name="name" placeholder="Event Name">
+                    <input type="text" class="form-control" id="event-name" name="name" value="{{ old('name', $event->name) }}" placeholder="Event Name">
                 </div>
 
                 <div class="form-group">
                     <label for="capacity"><strong>Capacity</strong></label>
-                    <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity">
+                    <input type="number" class="form-control" id="capacity" name="capacity" value="{{ old('capacity', $event->capacity) }}" placeholder="Capacity">
                 </div>
 
                 <div class="form-group">
                     <label for="venue"><strong>Venue</strong></label>
-                    <input type="text" class="form-control" id="venue" name="venue" placeholder="Venue">
+                    <input type="text" class="form-control" id="venue" name="venue" value="{{ old('venue', $event->venue) }}" placeholder="Venue">
                 </div>
 
                 <div class="form-group">
                     <label for="StartDate"><strong>Start Date</strong></label>
-                    <input type="date" class="form-control" id="StartDate" name="StartDate">
+                    <input type="date" class="form-control" id="StartDate" name="StartDate" value="{{ old('StartDate', $event->StartDate) }}">
                 </div>
 
                 <div class="form-group">
                     <label for="EndDate"><strong>End Date</strong></label>
-                    <input type="date" class="form-control" id="EndDate" name="EndDate">
+                    <input type="date" class="form-control" id="EndDate" name="EndDate" value="{{ old('EndDate', $event->EndDate) }}">
                 </div>
             </div>
 
             <div class="d-flex justify-content-end gap-3">
-                <button type="submit" class="btn btn-success">Create Event</button>
+                <button type="submit" class="btn btn-success">Update Event</button>
                 <a href="{{ route('viewevent') }}" class="btn btn-primary">
                     <i class="fas fa-list"></i> View Events
                 </a>
             </div>
-
-
         </form>
     </div>
 </div>

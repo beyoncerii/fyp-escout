@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Event;
 use App\Models\Level;
 use App\Models\Skill;
 use App\Models\Athlete;
+use App\Models\Activity;
+use App\Models\Schedule;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,6 +61,21 @@ class Athlete extends Authenticatable
     public function scouts()
     {
         return $this->hasMany(Scout::class, 'athlete_id');
+    }
+
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class, 'athlete_id');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 
 

@@ -48,4 +48,9 @@ class Staff extends Authenticatable{
         return $this->hasMany(Scout::class, 'staff_id');
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'staff_id');
+    }
+
 }
