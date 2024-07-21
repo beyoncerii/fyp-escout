@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('EndDate')->nullable();
             $table->integer('capacity')->nullable();
             $table->foreignId('staff_id')->nullable();
+            $table->foreignId('sport_id')->nullable();
+            $table->string('message')->nullable();
             $table->timestamps();
         });
     }

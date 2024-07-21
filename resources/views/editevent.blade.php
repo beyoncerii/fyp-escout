@@ -34,6 +34,16 @@
             </div>
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <header class="mb-2" style="text-align: center;">Edit Event</header>
 
         <form action="{{ route('events.update', $event->id) }}" method="POST">

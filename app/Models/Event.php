@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Sport;
 use App\Models\Staff;
 use App\Models\Athlete;
 use App\Models\Activity;
@@ -19,7 +20,14 @@ class Event extends Model
         'StartDate',
         'EndDate',
         'staff_id',
+        'message',
+        'sport_id',
     ];
+
+    public function sports()
+    {
+        return $this->belongsTo(Sport::class, 'sport_id')->withDefault();
+    }
 
     public function staff()
     {
@@ -35,5 +43,6 @@ class Event extends Model
     {
         return $this->hasMany(Activity::class);
     }
+
 
 }

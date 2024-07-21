@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Event;
+use App\Models\Sport;
 use App\Models\Athlete;
 use App\Models\Activity;
 use App\Mail\AthleteScouted;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\EventUpdatedNotification;
 
 class EventController extends Controller
 {
@@ -35,8 +37,11 @@ class EventController extends Controller
     // Show the form for creating a new event
     public function create()
     {
-        return view('createevent');
+        $sports = Sport::all();
+
+        return view('event.create', compact('sports'));
     }
+
 
 
 
@@ -49,6 +54,8 @@ class EventController extends Controller
             'capacity' => 'nullable|integer',
             'StartDate' => 'nullable|date|after_or_equal:' . Carbon::today()->format('m-d-Y'),
             'EndDate' => 'nullable|date|after_or_equal:StartDate',
+            'message' => 'nullable|string',
+            'sport_id' => 'nullable|exists:sports,id',
         ]);
 
         // Check if the StartDate is before today
@@ -128,13 +135,11 @@ private function getAvailableAthletes($startDate, $endDate, $eventId)
 
     // Show the form for editing the specified event
     public function edit($id)
-    {
-        // Find the event by ID
-        $event = Event::findOrFail($id);
-
-        // Return the edit view with the event data
-        return view('editevent', compact('event'));
-    }
+{
+    $event = Event::findOrFail($id);
+    $sports = Sport::all();
+    return view('editevent', compact('event', 'sports'));
+}
 
 
 
@@ -146,9 +151,15 @@ private function getAvailableAthletes($startDate, $endDate, $eventId)
         'venue' => 'required|string|max:255',
         'StartDate' => 'required|date|after_or_equal:' . Carbon::today()->format('Y-m-d'),
         'EndDate' => 'required|date|after_or_equal:StartDate',
+        'message' => 'nullable|string',
+        'sport_id' => 'nullable|exists:sports,id',
     ]);
 
     $event = Event::findOrFail($id); // Find the event by ID
+
+    // Check if name or venue have changed
+    $originalName = $event->name;
+    $originalVenue = $event->venue;
 
     $event->update([ // Update the event with new data
         'name' => $validated['name'],
@@ -156,11 +167,28 @@ private function getAvailableAthletes($startDate, $endDate, $eventId)
         'venue' => $validated['venue'],
         'StartDate' => $validated['StartDate'],
         'EndDate' => $validated['EndDate'],
+        'message' => $validated['message'],
+        'sport_id' => $validated['sport_id'],
     ]);
+
+    // Send email notifications to accepted athletes if name or venue have changed
+    if ($originalName !== $event->name || $originalVenue !== $event->venue) {
+        $acceptedAthletes = Activity::where('event_id', $event->id)
+            ->where('status', 'accepted')
+            ->with('athlete')
+            ->get()
+            ->pluck('athlete');
+
+        foreach ($acceptedAthletes as $athlete) {
+            Mail::to($athlete->email)->send(new EventUpdatedNotification($event));
+        }
+    }
 
     // Redirect back with a success message
     return redirect()->route('viewevent')->with('success', 'Event updated successfully!');
 }
+
+
 
 
 
