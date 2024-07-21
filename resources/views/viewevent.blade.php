@@ -31,7 +31,7 @@
     </div>
 @endif
 
-<div class="container-sm">
+<div class="container-sm" style="padding-bottom: 3%">
     <div style="margin-top: 50px">
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">

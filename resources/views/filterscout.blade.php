@@ -56,8 +56,8 @@
         @if($isScouted)
             <p>Athletes successfully scouted for this event:</p>
             <ul>
-                @foreach($scoutedAthletes as $athleteName)
-                    <li>{{ $athleteName }}</li>
+                @foreach($scoutedAthletes as $athlete)
+                <li>{{ $athlete['name'] }} - {{ ucfirst($athlete['status']) }}</li>
                 @endforeach
             </ul>
         @else
@@ -71,7 +71,7 @@
                     @foreach($availableAthletes as $athlete)
                         <div>
                             <input type="checkbox" name="athletes[]" value="{{ $athlete->id }}">
-                            <label>{{ $athlete->name }}</label>
+                            <label>{{ $athlete->name }} </label>
                         </div>
                     @endforeach
                     <button type="submit">Pick Athletes</button>

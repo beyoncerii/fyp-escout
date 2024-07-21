@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Event;
 use App\Models\Athlete;
 use App\Models\Activity;
@@ -46,9 +47,14 @@ class EventController extends Controller
             'name' => 'nullable|string|max:255',
             'venue' => 'nullable|string|max:255',
             'capacity' => 'nullable|integer',
-            'StartDate' => 'nullable|date',
+            'StartDate' => 'nullable|date|after_or_equal:' . Carbon::today()->format('m-d-Y'),
             'EndDate' => 'nullable|date|after_or_equal:StartDate',
         ]);
+
+        // Check if the StartDate is before today
+        if (Carbon::parse($validated['StartDate'])->isBefore(Carbon::today())) {
+            return back()->withErrors(['StartDate' => 'The start date must be today or a future date.'])->withInput();
+        }
 
         $validated['staff_id'] = auth('staff')->id();     // Add the authenticated staff ID
 
@@ -76,12 +82,17 @@ class EventController extends Controller
     // Fetch available athletes excluding those who are accepted or rejected
     $availableAthletes = $this->getAvailableAthletes($event->StartDate, $event->EndDate, $event->id);
 
-    // Fetch names of scouted athletes
+    // Fetch names and statuses of scouted athletes
     $scoutedAthletes = Activity::where('event_id', $event->id)
         ->whereIn('status', ['accepted', 'pending'])
         ->with('athlete') // Ensure the athlete relationship is loaded
         ->get()
-        ->pluck('athlete.name')
+        ->map(function ($activity) {
+            return [
+                'name' => $activity->athlete->name,
+                'status' => $activity->status,
+            ];
+        })
         ->toArray();
 
     return view('filterscout', [
@@ -92,6 +103,7 @@ class EventController extends Controller
         'scoutedAthletes' => $scoutedAthletes
     ]);
 }
+
 
 
 
@@ -126,30 +138,30 @@ private function getAvailableAthletes($startDate, $endDate, $eventId)
 
 
 
-    // Update the specified event in the database
     public function update(Request $request, $id)
-    {
-        $request->validate([ // Validate the request
-            'name' => 'required|string|max:255',
-            'capacity' => 'required|integer',
-            'venue' => 'required|string|max:255',
-            'StartDate' => 'required|date',
-            'EndDate' => 'required|date',
-        ]);
+{
+    $validated = $request->validate([ // Validate the request
+        'name' => 'required|string|max:255',
+        'capacity' => 'required|integer',
+        'venue' => 'required|string|max:255',
+        'StartDate' => 'required|date|after_or_equal:' . Carbon::today()->format('Y-m-d'),
+        'EndDate' => 'required|date|after_or_equal:StartDate',
+    ]);
 
-        $event = Event::findOrFail($id);     // Find the event by ID
+    $event = Event::findOrFail($id); // Find the event by ID
 
-        $event->update([     // Update the event with new data
-            'name' => $request->input('name'),
-            'capacity' => $request->input('capacity'),
-            'venue' => $request->input('venue'),
-            'StartDate' => $request->input('StartDate'),
-            'EndDate' => $request->input('EndDate'),
-        ]);
+    $event->update([ // Update the event with new data
+        'name' => $validated['name'],
+        'capacity' => $validated['capacity'],
+        'venue' => $validated['venue'],
+        'StartDate' => $validated['StartDate'],
+        'EndDate' => $validated['EndDate'],
+    ]);
 
-        // Redirect back with a success message
-        return redirect()->route('viewevent')->with('success', 'Event updated successfully!');
-    }
+    // Redirect back with a success message
+    return redirect()->route('viewevent')->with('success', 'Event updated successfully!');
+}
+
 
 
 

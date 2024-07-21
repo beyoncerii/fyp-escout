@@ -34,6 +34,17 @@
     </div>
 @endif
 
+
+@if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <header class="mb-2" style="text-align: center;">Create Event</header>
 
         <form action="{{ route('events.store') }}" method="POST">

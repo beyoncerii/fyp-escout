@@ -28,6 +28,16 @@
                     </div>
                 @endif
 
+                @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
                         <h2 style="text-align: center">Set Unavailable Dates</h2>
                         <h6 style="text-align: center; margin-bottom: 5%;">By keeping your availability up-to-date, you'll help us ensure that every scouting opportunity aligns with your schedule. This will not only save you time but also make the scouting process smoother and more effective.</h6>
 
