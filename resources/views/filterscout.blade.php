@@ -52,6 +52,7 @@
         <p>Remaining Capacity: {{ $remainingCapacity }}</p>
         <p>Start Date: {{ $event->StartDate }}</p>
         <p>End Date: {{ $event->EndDate }}</p>
+        <p>Sport: {{ $event->sports ? $event->sports->name : 'No sport assigned' }}</p>
 
         @if($isScouted)
             <p>Athletes successfully scouted for this event:</p>
@@ -79,7 +80,7 @@
             @endif
         @endif
 
-        <a href="{{ route('createevent') }}">Create Another Event</a>
+        <a href="{{ route('event.create') }}">Create Another Event</a>
         <a href="{{ route('viewevent') }}">Back to Event Listing</a>
 
     </div>

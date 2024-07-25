@@ -231,7 +231,9 @@ Route::get('/createevent', function () {
  * EVENT ROUTES
  */
 
- Route::get('events/create', [EventController::class, 'create'])->name('event.create');
+//  Route::get('events/create', [EventController::class, 'create'])->name('createeevent');
+
+ Route::get('createevent', [EventController::class, 'create'])->name('event.create');
 
  Route::post('/events', [EventController::class, 'store'])->name('events.store');
 

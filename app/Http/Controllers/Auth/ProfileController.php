@@ -99,7 +99,7 @@ class ProfileController extends Controller
             'level' => 'required|integer|exists:levels,id',
             'achievement' => 'nullable|string',
             'sports' => 'required|array',
-            'stuid' => 'nullable|integer|unique:athletes,stuid',
+            'stuid' => 'nullable|integer',
             'program' => 'nullable|string',
             'semester' => 'nullable|integer',
             'sports.*' => 'integer|exists:sports,id',
@@ -163,7 +163,7 @@ class ProfileController extends Controller
             'position' => 'required|string|max:255',
             'level' => 'required|integer|exists:levels,id',
             'achievement' => 'nullable|string',
-            'stuid' => 'nullable|integer|unique:athletes,stuid',
+            'stuid' => 'nullable|integer',
             'program' => 'nullable|string',
             'semester' => 'nullable|integer',
             'strength' => 'required|integer|min:1|max:5',
@@ -221,6 +221,7 @@ class ProfileController extends Controller
         }
 
        // Accept athlete profile request
+// Accept athlete profile request
 public function acceptAthlete(Request $request, $id)
 {
     // Find the athlete by ID
@@ -230,9 +231,22 @@ public function acceptAthlete(Request $request, $id)
     $athlete->status = 'Approved';
     $athlete->save();
 
+    // Prepare the details for the email
+    $details = [
+        'title' => "EScout: Your athlete profile creation request has been approved!",
+        'body' => "Congratulations! Your athlete profile has been approved.
+                   You can now view and manage your profile.
+                   Best regards,
+                   EScout Team"
+    ];
+
+    // Send the approval email
+    Mail::to($athlete->email)->send(new AthleteApproved($details));
+
     // Redirect back with a success message
     return back()->with('success', 'Athlete profile approved successfully.');
 }
+
 
 
         //reject athlete profile request

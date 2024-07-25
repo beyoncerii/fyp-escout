@@ -66,13 +66,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="sport_id">Sport</label>
-                    <select name="sport_id">
-                        @foreach($sports as $sport)
-                            <option value="{{ $sport->id }}">{{ $sport->name }}</option>
-                        @endforeach
-                    </select>
+                    <label for="sports"><strong>Sport</strong></label><br>
+                            @foreach ($sports as $sport)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sport_id" id="sport-{{ $sport->id }}" value="{{ $sport->id }}">
+                                    <label class="form-check-label" for="sport-{{ $sport->id }}">{{ $sport->name }}</label>
+                                </div>
+                            @endforeach
                 </div>
+
 
 
                 <div class="form-group">
@@ -84,11 +86,12 @@
                     <label for="EndDate"><strong>End Date</strong></label>
                     <input type="date" class="form-control" id="EndDate" name="EndDate">
                 </div>
-            </div>
 
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" class="form-control">{{ old('message', $event->message ?? '') }}</textarea>
+                <div class="form-group">
+                    <label for="message"><strong>Message</strong></label>
+                    <textarea name="message" id="message" name="message" placeholder="Open this link to join my WhatsApp Group: https://chat.whatsapp.com/F3Jtmpj1gjsE5n2ovtzSHX " class="form-control">{{ old('message', $event->message ?? '') }}</textarea>
+                </div>
+
             </div>
 
             <div class="d-flex justify-content-end gap-3">

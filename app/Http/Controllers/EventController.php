@@ -39,7 +39,8 @@ class EventController extends Controller
     {
         $sports = Sport::all();
 
-        return view('event.create', compact('sports'));
+
+        return view('createevent', compact('sports'));
     }
 
 
@@ -86,8 +87,8 @@ class EventController extends Controller
     // Check if the event is fully scouted
     $isScouted = $remainingCapacity <= 0;
 
-    // Fetch available athletes excluding those who are accepted or rejected
-    $availableAthletes = $this->getAvailableAthletes($event->StartDate, $event->EndDate, $event->id);
+    // Fetch available athletes for the event based on sport
+    $availableAthletes = $this->getAvailableAthletes($event->StartDate, $event->EndDate, $event->id, $event->sport_id);
 
     // Fetch names and statuses of scouted athletes
     $scoutedAthletes = Activity::where('event_id', $event->id)
@@ -102,6 +103,9 @@ class EventController extends Controller
         })
         ->toArray();
 
+    // Eager load the sport relationship
+    $event->load('sports');
+
     return view('filterscout', [
         'event' => $event,
         'availableAthletes' => $availableAthletes,
@@ -115,19 +119,24 @@ class EventController extends Controller
 
 
 
+
 // Get athletes that are available for the event excluding those who are rejected
-private function getAvailableAthletes($startDate, $endDate, $eventId)
+private function getAvailableAthletes($startDate, $endDate, $eventId, $sportId)
 {
     return Athlete::where('status', 'Approved')
+        ->whereHas('sports', function ($query) use ($sportId) {
+            $query->where('sports.id', $sportId);
+        })
         ->whereDoesntHave('schedules', function ($query) use ($startDate, $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
         })
         ->whereDoesntHave('activities', function ($query) use ($eventId) {
             $query->where('event_id', $eventId)
-                ->whereIn('status', ['accepted', 'rejected']); // Use 'whereIn' to exclude both statuses
+                ->whereIn('status', ['accepted', 'rejected']);
         })
         ->get();
 }
+
 
 
 
