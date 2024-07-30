@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class ScoutController extends Controller
 {
+
+    //store manually scouted athlete
     public function store(Request $request){
         $scout = new Scout();
         $scout->athlete_id = $request->athlete_id;
@@ -17,6 +19,9 @@ class ScoutController extends Controller
         return redirect()->back();
     }
 
+
+
+    //show scouted athlete
     public function listScouted() {
         $coachId = Auth::guard('staff')->user()->id;
 

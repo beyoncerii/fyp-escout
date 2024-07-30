@@ -10,11 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
+
+    //create unavailable athletes
     public function create()
     {
         return view('calendar');
     }
 
+
+
+    //store unavailable athletes as schedule
     public function store(Request $request)
     {
         $request->validate([
@@ -64,6 +69,9 @@ class ScheduleController extends Controller
         return redirect()->route('calendar')->with('success', 'Unavailable dates added successfully');
     }
 
+
+
+    //show calendar of schedule
     public function show()
     {
         // Get the currently authenticated athlete's ID
@@ -81,6 +89,9 @@ class ScheduleController extends Controller
         return view('viewschedule', ['events' => $events]);
     }
 
+
+
+    //show schedule
     public function showSchedule($id)
     {
         $athleteId = $id;

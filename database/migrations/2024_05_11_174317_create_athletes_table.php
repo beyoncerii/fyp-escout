@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('stuid')->nullable();
             $table->string('program')->nullable();
             $table->integer('semester')->nullable();
+            $table->string('reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

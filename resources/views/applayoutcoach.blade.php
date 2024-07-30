@@ -36,7 +36,7 @@
                           </li>
 
                           <li class="nav-item">
-                            <a class="nav-link " href="{{ route ('event.create')}}">Create Event</a>
+                            <a class="nav-link " href="{{ route ('viewevent')}}">View Event</a>
                           </li>
 
                         <li class="nav-item">

@@ -17,6 +17,7 @@ class RegisterController extends Controller
     }
 
     public function store(Request $request) {
+
         // Validate the common fields
         $data = $request->validate([
             'name' => 'required|max:255',
@@ -45,30 +46,12 @@ class RegisterController extends Controller
             return redirect('/login');
 
         } else {
+
             Staff::create($data);
-            //     'name' => $data['name'],
-            //     'email' => $data['email'],
-            //     'phone' => $data['phone'],
-            //     'password' => $data['password'],
-            //     'role' => $data['role'],
-            // ]);
 
             return redirect('/login');
 
-        //     if ($data['role'] === 'coach') {
-        //         return redirect()->route('homecoach');
-        //     } else if ($data['role'] === 'admin') {
-        //         return redirect()->route('homeadmin');
-        //     }
-        // }
-
-        //     if ($data['role'] === 'coach') {
-        //         return redirect()->route('homecoach');
-        //     } else if ($data['role'] === 'admin') {
-        //         return redirect()->route('homecoach');
-        //     }
-
+        }
     }
-}
 
 }

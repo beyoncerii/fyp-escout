@@ -25,14 +25,17 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-@if (session('success'))
+<div class="container-sm" style="padding-bottom: 3%">
+    <div style="margin-top: 50px">
+
+        @if (session('success'))
     <div class="alert alert-success" style="margin-top: 2%">
         {{ session('success') }}
     </div>
 @endif
 
-<div class="container-sm" style="padding-bottom: 3%">
-    <div style="margin-top: 50px">
+        <h3 class="text-center bg-white p-3 rounded">List of Events</h3>
+
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -55,6 +58,7 @@
                     <td style="text-align: center;">{{ $event->venue }}</td>
                     <td style="text-align: center;">{{ $event->StartDate }}</td>
                     <td style="text-align: center;">{{ $event->EndDate }}</td>
+
                     <td style="text-align: center;">
 
                         <a href="{{ route('events.view', $event->id) }}" class="btn btn-sm btn-primary">
@@ -63,18 +67,20 @@
                         <a href=" {{ route('events.edit', $event->id) }} " class="btn btn-sm btn-warning">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <form action=" " method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </form>
                     </td>
+
                 </tr>
                 @endforeach
             </tbody>
+
         </table>
+
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('event.create') }}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Create Event
+            </a>
+        </div>
+
     </div>
 </div>
 

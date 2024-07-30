@@ -19,10 +19,11 @@ class CoachRejectionNotification extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($event, $athlete)
+    public function __construct($event, $athlete, $reason)
     {
         $this->event = $event;
         $this->athlete = $athlete;
+        $this->reason = $reason;
     }
 
     /**
@@ -62,6 +63,7 @@ class CoachRejectionNotification extends Mailable
                     ->with([
                         'event' => $this->event,
                         'athlete' => $this->athlete,
+                        'reason' => $this->reason,
                     ]);
     }
 }

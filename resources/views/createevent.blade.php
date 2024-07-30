@@ -26,16 +26,16 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <div class="d-flex align-items-center justify-content-center" style="margin-top: 3%; padding-bottom: 3%;">
-    <div class="box right-box p-4" style="background-color: rgba(227, 237, 247, 0.548); width: 40%; max-height: 90vh; overflow-y: auto; ">
+    <div class="box right-box p-4" style="background-color: white; width: 40%; max-height: 90vh; overflow-y: auto; ">
 
         @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
 
-@if ($errors->any())
+        @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -56,40 +56,41 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="capacity"><strong>Capacity</strong></label>
-                    <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity">
-                </div>
-
-                <div class="form-group">
                     <label for="venue"><strong>Venue</strong></label>
                     <input type="text" class="form-control" id="venue" name="venue" placeholder="Venue">
                 </div>
 
-                <div class="form-group">
-                    <label for="sports"><strong>Sport</strong></label><br>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="capacity"><strong>Capacity</strong></label>
+                        <input type="number" class="form-control" id="capacity" name="capacity" placeholder="Capacity">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="sports"><strong>Sport</strong></label>
+                        <select class="form-control" id="sports" name="sport_id">
                             @foreach ($sports as $sport)
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="sport_id" id="sport-{{ $sport->id }}" value="{{ $sport->id }}">
-                                    <label class="form-check-label" for="sport-{{ $sport->id }}">{{ $sport->name }}</label>
-                                </div>
+                                <option value="{{ $sport->id }}">{{ $sport->name }}</option>
                             @endforeach
+                        </select>
+                    </div>
                 </div>
 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="StartDate"><strong>Start Date</strong></label>
+                        <input type="date" class="form-control" id="StartDate" name="StartDate">
+                    </div>
 
-
-                <div class="form-group">
-                    <label for="StartDate"><strong>Start Date</strong></label>
-                    <input type="date" class="form-control" id="StartDate" name="StartDate">
-                </div>
-
-                <div class="form-group">
-                    <label for="EndDate"><strong>End Date</strong></label>
-                    <input type="date" class="form-control" id="EndDate" name="EndDate">
+                    <div class="form-group col-md-6">
+                        <label for="EndDate"><strong>End Date</strong></label>
+                        <input type="date" class="form-control" id="EndDate" name="EndDate">
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="message"><strong>Message</strong></label>
-                    <textarea name="message" id="message" name="message" placeholder="Open this link to join my WhatsApp Group: https://chat.whatsapp.com/F3Jtmpj1gjsE5n2ovtzSHX " class="form-control">{{ old('message', $event->message ?? '') }}</textarea>
+                    <textarea name="message" id="message" placeholder="Open this link to join my WhatsApp Group: https://chat.whatsapp.com/F3Jtmpj1gjsE5n2ovtzSHX " class="form-control">{{ old('message', $event->message ?? '') }}</textarea>
                 </div>
 
             </div>
@@ -100,7 +101,6 @@
                     <i class="fas fa-list"></i> View Events
                 </a>
             </div>
-
 
         </form>
     </div>

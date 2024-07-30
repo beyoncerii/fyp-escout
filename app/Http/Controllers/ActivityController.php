@@ -12,6 +12,7 @@ use App\Mail\CoachRejectionNotification;
 
 class ActivityController extends Controller
 {
+
     public function index()
     {
         // Get the currently authenticated athlete's ID
@@ -24,6 +25,8 @@ class ActivityController extends Controller
 
         return view('viewactivities', ['activities' => $activities]);
     }
+
+
 
     public function accept($id)
     {
@@ -44,9 +47,6 @@ class ActivityController extends Controller
 
         // Send email notification to the coach
         Mail::to($event->staff->email)->send(new CoachAcceptNotification($event, Auth::guard('athlete')->user()));
-
-
-
 
         // Generate all dates between the event's start and end dates
         $startDate = new \DateTime($event->StartDate);
@@ -83,29 +83,36 @@ class ActivityController extends Controller
 
 
 
-public function reject($id)
-{
-    // Find the activity by ID
-    $activity = Activity::findOrFail($id);
+    public function reject(Request $request, $id)
+    {
+        // Validate the input
+        $request->validate([
+            'reason' => 'required|string|max:255',
+        ]);
 
-    // Check if the activity belongs to the currently authenticated athlete
-    if ($activity->athlete_id !== Auth::guard('athlete')->id()) {
-        return redirect()->route('activities.index')->with('error', 'Unauthorized action.');
-    }
+        // Find the activity by ID
+        $activity = Activity::findOrFail($id);
 
-    // Update the activity status to rejected
-    $activity->status = 'rejected';
-    $activity->save();
+        // Check if the activity belongs to the currently authenticated athlete
+        if ($activity->athlete_id !== Auth::guard('athlete')->id()) {
+            return redirect()->route('activities.index')->with('error', 'Unauthorized action.');
+        }
 
-    // Fetch the event related to the activity
+        // Update the activity status to rejected
+        $activity->status = 'rejected';
+        $activity->save();
+
+        // Fetch the event related to the activity
         $event = $activity->event;
 
-    // Send email notification to the coach
-    Mail::to($event->staff->email)->send(new CoachRejectionNotification($event, Auth::guard('athlete')->user()));
+        // Get the rejection reason
+        $reason = $request->input('reason');
 
+        // Send email notification to the coach
+        Mail::to($event->staff->email)->send(new CoachRejectionNotification($event, Auth::guard('athlete')->user(), $reason));
 
+        return redirect()->route('activities.index')->with('success', 'Activity rejected successfully.');
+    }
 
-    return redirect()->route('activities.index')->with('success', 'Activity rejected successfully.');
-}
 
 }

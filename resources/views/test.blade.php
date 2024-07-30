@@ -9,10 +9,12 @@
 <div class="container mt-0">
     <div class="row justify-content-center">
         <div class="col-md-10" style="padding: 5%">
+
             <div class="card shadow-sm">
                 <div class="card-header" style="background-color: grey;">
                     <h2 class="mb-0" style="color: white">Create Athlete Profile </h2>
                 </div>
+
                 <div class="card-body">
                     @if ($errors->any())
                     <div class="alert alert-danger">

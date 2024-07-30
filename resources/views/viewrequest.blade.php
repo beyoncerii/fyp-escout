@@ -9,6 +9,15 @@
     <div class="container-sm">
 
         <div style="margin-top: 50px">
+
+            @if (session('success'))
+                <div class="alert alert-success" style="margin-top: 2%">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <h3 class="text-center bg-white p-3 rounded">List of Athlete Requests</h3>
+
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                   <tr>
@@ -29,11 +38,13 @@
                     <td style="text-align: center;">{{ $athlete->id }}</td>
                     <td style="text-align: center;">{{ $athlete->name }}</td>
                     <td style="text-align: center;">{{ $athlete->created_at }}</td>
+
                     <td style="text-align: center;">
                         <a href="{{ route('demo', $athlete->id) }}" class="btn btn-sm btn-primary">
                             <i class="fas fa-eye"></i> View Profile
                         </a>
                     </td>
+
                     <td style="text-align: center;">{{ $athlete->status }}</td>
 
                     <td style="text-align: center;">
@@ -58,6 +69,7 @@
                             </form>
                         @endif
                     </td>
+
                 </tr>
                 @endforeach
 

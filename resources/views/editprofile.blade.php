@@ -14,7 +14,7 @@
             <p class="alert alert-danger">Please check your input</p>
             @endif
 
-            <div class="box right-box p-4 col-sm-6 mx-auto" style="background-color: rgba(227, 237, 247, 0.548);">
+            <div class="box right-box p-4 col-sm-6 mx-auto" style="background-color:rgba(255, 255, 255, 0.692);">
 
                 @if (session('success'))
                 <p class="alert alert-success">{{ session('success') }}</p>

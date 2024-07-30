@@ -7,6 +7,10 @@
     <div class="container-sm">
 
         <div style="margin-top: 50px">
+
+            <h3 class="text-center bg-white p-3 rounded">List of Scouted Athletes</h3>
+
+
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>

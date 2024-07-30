@@ -13,12 +13,16 @@ class AthleteScouted extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $event;
+    public $athlete;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($event, $athlete)
     {
-        //
+        $this->event = $event;
+        $this->athlete = $athlete;
     }
 
     /**
@@ -27,19 +31,19 @@ class AthleteScouted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Athlete Scouted',
+            subject: 'Athlete Scout Notification',
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emailscouted',
-        );
-    }
+    // /**
+    //  * Get the message content definition.
+    //  */
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'emailscouted',
+    //     );
+    // }
 
     /**
      * Get the attachments for the message.
@@ -54,6 +58,10 @@ class AthleteScouted extends Mailable
     public function build()
     {
         return $this->subject('You Have Been Scouted!')
-                    ->view('emails.athlete_scouted');
+                    ->view('emailscouted')
+                    ->with([
+                        'event' => $this->event,
+                        'athlete' => $this->athlete,
+                    ]);
     }
 }

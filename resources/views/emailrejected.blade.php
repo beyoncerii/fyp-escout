@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Athlete Rejected Your Event</title>
+    <title>Athlete Reject Event Notification</title>
 </head>
 <body>
     <h1>Athlete Rejected Your Event</h1>
@@ -13,6 +13,7 @@
         <li>Venue: {{ $event->venue }}</li>
         <li>Start Date: {{ $event->StartDate }}</li>
         <li>End Date: {{ $event->EndDate }}</li>
+        <li>Reason: {{ $reason }}</li>
     </ul>
     <p>Thank you for using our service.</p>
 </body>
